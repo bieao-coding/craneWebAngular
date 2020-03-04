@@ -1,0 +1,76 @@
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-dropdown [options]="models"  [(ngModel)] = 'currentModel' (onChange)="changeModel()"   [autoWidth]="false"></p-dropdown>
+        </div>
+        <div class="ui-g ui-sm-12 pc-label ph-label" *ngIf="currentModel">
+          开始时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input" *ngIf="currentModel">
+          <p-calendar [(ngModel)]="beginTime" [showTime]="true" [readonlyInput]="true" hourFormat="24" dateFormat="yy-mm-dd" (onSelect)="selectBegin($event)" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" [showSeconds]="true" yearRange="1970:2030" styleClass = 'calendar-month-year'></p-calendar>
+        </div>
+        <div class="ui-g ui-sm-12 pc-label ph-label" *ngIf="currentModel">
+          结束时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input" *ngIf="currentModel">
+          <p-calendar [(ngModel)]="endTime" (onSelect)="selectEnd($event)" [readonlyInput]="true" hourFormat="24" dateFormat="yy-mm-dd" [showTime]="true" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" [showSeconds]="true" yearRange="1970:2030" styleClass="calendar-month-year"></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-input ph-input" *ngIf="currentModel">
+          <p-dropdown [options]="playingModel"  [(ngModel)] = 'currentPlaying' (onChange)="changeSpeed()"  [autoWidth]="false"></p-dropdown>
+        </div>
+        <div class="ui-g ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" id="search"></button>
+        </div>
+      </div>
+        <div class="ui-g card no-table" id="cloth" [ngStyle]="{'height.px': maxHeight}">
+          <div id="container" class='ui-md-8 ui-sm-12 left-side'></div>
+          <div id="craneInfo" class="ui-md-4 ui-sm-12 right-side">
+            <div class="ui-g ui-md-10 ui-sm-12 content-info" *ngIf = 'showInfo'>
+              <div class="ui-md-12 ui-sm-12 info-name">
+                <span>塔机详参<span class="color-yellow">（{{(!currentModel ? currentTime : historyMinTime)|date:'yyyy-MM-dd HH:mm:ss'}}）</span></span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">塔机编号</span><span class="word ui-sm-12">{{currentCrane.craneNumber}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">高度（m）</span><span class="word ui-sm-12">{{currentCrane.height}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">记录时间</span><span class="word ui-sm-12">{{currentCrane.recordTime}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">回转角度（°）</span><span class="word ui-sm-12">{{currentCrane.rotationAngle}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">幅度（m）</span><span class="word ui-sm-12">{{currentCrane.radius}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">设备编号</span><span class="word ui-sm-12">{{currentCrane.sn}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">吊重（t）</span><span class="word ui-sm-12">{{currentCrane.loadValue}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">安全吊重（t）</span><span class="word ui-sm-12">{{currentCrane.safeLoad}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">臂长（m）</span><span class="word ui-sm-12">{{currentCrane.armLength}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">力矩百分比（%）</span><span class="word ui-sm-12">{{currentCrane.torquePercent}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item remove-bottom">
+                <span class="title ui-md-5 ui-sm-12">风速（m/s）</span><span class="word ui-sm-12">{{currentCrane.windSpeed}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item remove-bottom">
+                <span class="title ui-md-5 ui-sm-12">吊绳倍率</span><span class="word ui-sm-12">{{currentCrane.stringFactor}}</span>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

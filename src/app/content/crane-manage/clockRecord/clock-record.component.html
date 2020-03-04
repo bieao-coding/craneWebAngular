@@ -1,0 +1,53 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-label ph-label">
+          开始时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="beginTime" [showTime]="true" [readonlyInput]="true" hourFormat="24" dateFormat="yy-mm-dd" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" [showSeconds]="true" yearRange="1970:2030" styleClass = 'calendar-month-year'></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-label ph-label">
+          结束时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="endTime" [readonlyInput]="true"  hourFormat="24" [maxDate]="now" dateFormat="yy-mm-dd" [showTime]="true" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" [showSeconds]="true" yearRange="1970:2030" styleClass="calendar-month-year"></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-label ph-label">
+          关键字
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <input type="text" [(ngModel)] = 'searchValue' pInputText placeholder="名字或身份证">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="records"  styleClass = 'minWidth800' [rowHover] = 'true'>
+            <p-column field="personalName" header="人员姓名">
+              <ng-template let-record="rowData" pTemplate="body">
+                <span>{{record.personalName | trim}}</span>
+              </ng-template>
+            </p-column>
+            <p-column field="identityCard" header="身份证号"></p-column>
+            <p-column field="result" header="状态" headerStyleClass="width60">
+              <ng-template let-record="rowData" pTemplate="body">
+                <span *ngIf = 'record.result' class="color-green">成功</span>
+                <span *ngIf = '!record.result' class="color-red">失败</span>
+              </ng-template>
+            </p-column>
+            <p-column field="insertTime" header="打卡时间" headerStyleClass="width150"></p-column>
+          </p-dataTable>
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" (onPageChange)="pageChange($event)">
+        </p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>

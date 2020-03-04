@@ -1,0 +1,32 @@
+<div id="body" class="body-container pc-login ph-login" [ngClass]="{'ph_bg':isPh}"  style="overflow: hidden">
+  <img *ngIf="!isPh" class="cap" src="../../assets/images/cap.png"/>
+  <div class="title ph-title">
+    <img src="../../assets/images/title.png"/>
+  </div>
+  <div class="login">
+    <div class="companyName"><span>工程机械在线监控系统</span></div>
+    <div class="login-content user-name">
+      <input class="login-input" [(ngModel)] = 'name' id="name"
+             autocomplete="off" placeholder="用户名"/>
+      <span>{{nameError}}</span>
+    </div>
+    <div class="login-content user-password">
+      <input class="login-input" type="password" id="password"
+             [(ngModel)] = 'password' autocomplete="off" placeholder="密码"/>
+      <span>{{passwordError}}</span>
+    </div>
+    <div class="remember-password">
+      <input type="checkbox" [(ngModel)]="remember"/><span>记住密码</span>
+    </div>
+    <div class="submit" style="user-select:none;">
+        <a (click)="Login()" >登&nbsp;&nbsp;录</a>
+        <div *ngIf="showCloth" class="cloth">
+          <i class="fa fa-spinner fa-pulse" style="font-size: 20px"></i>
+        </div>
+    </div>
+  </div>
+  <div class="copyright" *ngIf="!isPh">
+    <div>Copyright © 2018 林丰电子 All Rights Reserved(v：1.1)</div>
+    <div>电话：400-686-1209</div>
+  </div>
+  </div>

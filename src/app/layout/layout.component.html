@@ -1,0 +1,35 @@
+<p-blockUI [blocked]="loading"><i class="fa fa-spinner fa-pulse loading"></i></p-blockUI>
+<p-growl [(value)]="msgs"></p-growl>
+<app-dialog [message] = 'info.message' [showDialog] = 'info.showDialog' (doSoming) = 'info.doSoming($event)'></app-dialog>
+<div class="layout-wrapper" (click)="onLayoutClick()"
+     [ngClass]="{'layout-horizontal': isHorizontal(),
+                 'layout-overlay': isOverlay(),
+                 'layout-static': isStatic(),
+                 'layout-slim':isSlim(),
+                 'full-screen':isScreen,
+                 'layout-static-inactive': staticMenuDesktopInactive,
+                 'layout-mobile-active': staticMenuMobileActive,
+                 'layout-overlay-active':overlayMenuActive}">
+
+  <app-topbar></app-topbar>
+  <div class="layout-menu-container" (click)="onMenuClick($event)">
+    <p-scrollPanel #layoutMenuScroller [style]="{height: '100%'}">
+      <div class="layout-menu-content">
+        <div class="layout-menu-title">MENU</div>
+        <layout-menu [reset]="resetMenu"></layout-menu>
+      </div>
+    </p-scrollPanel>
+  </div>
+
+  <div class="layout-content">
+
+    <app-breadcrumb></app-breadcrumb>
+
+    <div class="layout-content-container">
+      <router-outlet></router-outlet>
+    </div>
+
+    <!--<app-footer></app-footer>-->
+    <div class="layout-mask" *ngIf="staticMenuMobileActive"></div>
+  </div>
+</div>

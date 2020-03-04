@@ -1,0 +1,80 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-label ph-label">
+          开始时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="beginTime" [readonlyInput]="true"  dateFormat="yy-mm-dd" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2030" styleClass = 'calendar-month-year'></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-label ph-label">
+          结束时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="endTime" [maxDate]="now" [readonlyInput]="true" dateFormat="yy-mm-dd" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true"  yearRange="1970:2030" styleClass="calendar-month-year"></p-calendar>
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <div class="message-cloth minWidth800">
+            <div class="last-message">
+              <span>
+                    最新信息
+              </span>
+              <span *ngIf="!!currentData.recordTime" class="m-l-40">
+                <span>开机时间：{{currentData.recordTime}}</span>
+                <span class="m-l-20">开始时长：{{currentData.runSeconds}}</span>
+                <span class="m-l-20">总计：{{currentData.totalSeconds}}</span>
+              </span>
+              <span *ngIf="!currentData.recordTime" class="m-l-20">
+                        无
+              </span>
+            </div>
+          </div>
+          <p-table [value]="videoRunTime" [customSort]="true"  styleClass = 'text-center minWidth800' [rowHover] = 'false'>
+            <ng-template pTemplate="caption">
+              <div class="current-title">
+                <div class="ui-g">
+                  <div class="main-info">
+                    <span>
+                      {{crane.craneNumber}}（{{crane.sn}}）
+                    </span>
+                    <i class="fa fa-signal font-size16"  [ngClass]="{'online':crane.online === 'true','offline':crane.online === 'false'}"></i>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th>开机时间</th>
+                <th>关机时间</th>
+                <th>运行时长</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-i='rowIndex'>
+              <tr>
+                <td>{{rowData.recordTime}}</td>
+                <td>{{rowData.endTime}}</td>
+                <td>{{rowData.runTime}}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="3" class="color-no-data">暂无数据</td>
+              </tr>
+            </ng-template>
+          </p-table >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

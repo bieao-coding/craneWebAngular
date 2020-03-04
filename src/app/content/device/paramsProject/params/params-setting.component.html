@@ -1,0 +1,1166 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 search no-padding">
+      <div class="ui-sm-12 pc-input ph-input pc-width250">
+        <p-dropdown [options]="settings"  [(ngModel)] = 'currentOption' (onChange)="changeOption()"  [autoWidth]="false"></p-dropdown>
+      </div>
+      <div class="ui-sm-12 pc-button ph-button" *ngIf="[5,10].indexOf(currentOption) === -1" >
+        <button type="button" label="读取参数" pButton icon="fa-search" class="pc-button-large"  (click)="getParams()"></button>
+      </div>
+      <div class="ui-sm-12 pc-button ph-button" *ngIf="[5,6,10,14].indexOf(currentOption) === -1">
+        <button type="button" label="设置参数" pButton icon="fa-save" [disabled]="!isRead || settingForm.invalid"    class="pc-button-large" (click)="saveSettig()"></button>
+      </div>
+      <div *ngIf = 'responseMark !== "load" && currentOption !== 10' class="ui-sm-12 params-style">
+        <div>{{responseMark === 'read' ? '读取':'设置'}}状态：<span [ngClass]="{'color-red' : !responseInfo.state}">{{responseInfo.state ? '成功':'失败'}}</span></div>
+        <div *ngIf="responseInfo.state">{{responseMark === 'read' ? '读取':'设置'}}时间：<span>{{responseInfo.time}}</span></div>
+      </div>
+    </div>
+    <div class="ui-g ui-g-12 card m-t-10 box-shadow-style" [ngStyle]="[7,11,12,13].indexOf(currentOption) !== -1 ? {} : flowStyle">
+      <form [formGroup]="settingForm" id="form" *ngIf="[5,6,10].indexOf(currentOption) === -1" class="ui-md-12 ui-sm-12 no-padding">
+        <!--塔机结构参数设置-->
+        <div *ngIf = '!currentOption'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机编号
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="num" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.num}"/>
+              <div class="form-error-title" *ngIf="formErrors.num">
+                {{formErrors.num}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机类型
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <p-dropdown [options]="types" styleClass ="ph-form-select" [(ngModel)]="type" [autoWidth]="true"  formControlName="craneType"></p-dropdown>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              工地坐标X(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="x" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.x}"/>
+              <div class="form-error-title" *ngIf="formErrors.x">
+                {{formErrors.x}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              工地坐标Y(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="y" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.y}"/>
+              <div class="form-error-title" *ngIf="formErrors.y">
+                {{formErrors.y}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              起重臂(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="length1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.length1}"/>
+              <div class="form-error-title" *ngIf="formErrors.length1">
+                {{formErrors.length1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              平衡臂(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="length2" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.length2}"/>
+              <div class="form-error-title" *ngIf="formErrors.length2">
+                {{formErrors.length2}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机高(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="height1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.height1}"/>
+              <div class="form-error-title" *ngIf="formErrors.height1">
+                {{formErrors.height1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 1 || type === 2">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔帽高(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="height2" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.height2}"/>
+              <div class="form-error-title" *ngIf="formErrors.height2">
+                {{formErrors.height2}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              默认角度(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="defaultAngleNum" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.defaultAngle}"/>
+              <div class="form-error-title" *ngIf="formErrors.defaultAngle">
+                {{formErrors.defaultAngle}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              默认幅度(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="attachDefaultRadius" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.defaultRadius}"/>
+              <div class="form-error-title" *ngIf="formErrors.defaultRadius">
+                {{formErrors.defaultRadius}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              配重下垂距离(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="height3" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.height3}"/>
+              <div class="form-error-title" *ngIf="formErrors.height3">
+                {{formErrors.height3}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 0 || type === 2">
+            <div class="ui-sm-12 pc-form-label form-label">
+              钢丝绳下垂距离(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="height5" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.height5}"/>
+              <div class="form-error-title" *ngIf="formErrors.height5">
+                {{formErrors.height5}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              前桥高(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="height4" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.height4}"/>
+              <div class="form-error-title" *ngIf="formErrors.height4">
+                {{formErrors.height4}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              前桥宽(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input  input-noSpace pInputText type="text" formControlName="width1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.width1}"/>
+              <div class="form-error-title" *ngIf="formErrors.width1">
+                {{formErrors.width1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              后桥宽(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="width2" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.width2}"/>
+              <div class="form-error-title" *ngIf="formErrors.width2">
+                {{formErrors.width2}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              标准节边长(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="attachLength4" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.length4}"/>
+              <div class="form-error-title" *ngIf="formErrors.length4">
+                {{formErrors.length4}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              标准节高度(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="attachHeight6" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.attachHeight6}"/>
+              <div class="form-error-title" *ngIf="formErrors.attachHeight6">
+                {{formErrors.attachHeight6}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              额定起重量(t)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="maxLoad" disabled
+                     [ngClass]="{'form-input-error': formErrors.maxLoad}"/>
+              <div class="form-error-title" *ngIf="formErrors.maxLoad">
+                {{formErrors.maxLoad}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 1">
+            <div class="ui-sm-12 pc-form-label form-label">
+              动臂绞点(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="attachLength1_1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.length1_1}"/>
+              <div class="form-error-title" *ngIf="formErrors.length1_1">
+                {{formErrors.length1_1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 2">
+            <div class="ui-sm-12 pc-form-label form-label">
+              前拉杆距离(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="length3" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.length3}"/>
+              <div class="form-error-title" *ngIf="formErrors.length3">
+                {{formErrors.length3}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--防碰撞参数设置-->
+        <div *ngIf="currentOption === 1">
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              转动三速(弧长m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="slewWarning3" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.slewWarning3}"/>
+              <div class="form-error-title" *ngIf="formErrors.slewWarning3">
+                {{formErrors.slewWarning3}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              转动二速(弧长m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="slewWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.slewWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.slewWarning">
+                {{formErrors.slewWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              转动一速(弧长m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input  input-noSpace pInputText type="text" formControlName="slewAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.slewAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.slewAlarm">
+                {{formErrors.slewAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              停车角(弧长m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="minSlewWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.minSlewWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.minSlewWarning">
+                {{formErrors.minSlewWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              刹车角(弧长m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="breakSlewWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.breakSlewWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.breakSlewWarning">
+                {{formErrors.breakSlewWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              刹车时间(s)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="breakDelay" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.breakDelay}"/>
+              <div class="form-error-title" *ngIf="formErrors.breakDelay">
+                {{formErrors.breakDelay}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              幅度高速(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="radiusWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.radiusWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.radiusWarning">
+                {{formErrors.radiusWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              幅度低速(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="radiusAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.radiusAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.radiusAlarm">
+                {{formErrors.radiusAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              停车速度(°/s)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="minSlewSpeed" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.minSlewSpeed}"/>
+              <div class="form-error-title" *ngIf="formErrors.minSlewSpeed">
+                {{formErrors.minSlewSpeed}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--力&力矩&风速参数设置-->
+        <div *ngIf="currentOption === 2">
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              力限制违章百分比(%)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="loadPeccancy" disabled placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.loadPeccancy}"/>
+              <div class="form-error-title" *ngIf="formErrors.loadPeccancy">
+                {{formErrors.loadPeccancy}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              力限制报警百分比(%)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="loadAlarm" disabled
+                     [ngClass]="{'form-input-error': formErrors.loadAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.loadAlarm">
+                {{formErrors.loadAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              力限制预警百分比(%)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="loadWarning" disabled
+                     [ngClass]="{'form-input-error': formErrors.loadWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.loadWarning">
+                {{formErrors.loadWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              力矩百分比1(%)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="torquePeccancy" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.torquePeccancy}"/>
+              <div class="form-error-title" *ngIf="formErrors.torquePeccancy">
+                {{formErrors.torquePeccancy}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              力矩百分比2(%)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="torqueAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.torqueAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.torqueAlarm">
+                {{formErrors.torqueAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              力矩百分比3(%)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="torqueWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.torqueWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.torqueWarning">
+                {{formErrors.torqueWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              风速报警(m/s)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="windAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.windAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.windAlarm">
+                {{formErrors.windAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              风速预警(m/s)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="windWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.windWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.windWarning">
+                {{formErrors.windWarning}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--塔机限位参数设置-->
+        <div *ngIf = 'currentOption === 3'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机内限位预警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="inWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.inWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.inWarning">
+                {{formErrors.inWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机内限位报警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="inAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.inAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.inAlarm">
+                {{formErrors.inAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机外限位预警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="outWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.outWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.outWarning">
+                {{formErrors.outWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机外限位报警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="outAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.outAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.outAlarm">
+                {{formErrors.outAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机上限位预警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="upWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.upWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.upWarning">
+                {{formErrors.upWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机上限位报警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="upAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.upAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.upAlarm">
+                {{formErrors.upAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机下限位预警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="downWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.downWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.downWarning">
+                {{formErrors.downWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机下限位报警(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="downAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.downAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.downAlarm">
+                {{formErrors.downAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机正转预警(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="corotationWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.corotationWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.corotationWarning">
+                {{formErrors.corotationWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机正转报警(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="corotationAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.corotationAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.corotationAlarm">
+                {{formErrors.corotationAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机反转预警(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="reverseWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.reverseWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.reverseWarning">
+                {{formErrors.reverseWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机反转报警(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="reverseAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.reverseAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.reverseAlarm">
+                {{formErrors.reverseAlarm}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--设备密码参数设置-->
+        <div *ngIf = 'currentOption === 4'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              系统管理密码
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="systemPassword" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.systemPassword}"/>
+              <div class="form-error-title" *ngIf="formErrors.systemPassword">
+                {{formErrors.systemPassword}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              安装调试密码
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="debugPassword" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.debugPassword}"/>
+              <div class="form-error-title" *ngIf="formErrors.debugPassword">
+                {{formErrors.debugPassword}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              用户管理密码
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="userPassword" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.userPassword}"/>
+              <div class="form-error-title" *ngIf="formErrors.userPassword">
+                {{formErrors.userPassword}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--通讯协议版本设置-->
+        <div *ngIf = 'currentOption === 7'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              延迟发送时间(ms)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="sendDelayTime" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.sendDelayTime}"/>
+              <div class="form-error-title" *ngIf="formErrors.sendDelayTime">
+                {{formErrors.sendDelayTime}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              通信协议版本
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <p-dropdown [options]="versions" styleClass ="ph-form-select" [autoWidth]="true"  formControlName="proVersionType"></p-dropdown>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              通讯质量检测周期(s)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="commQuality" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.commQuality}"/>
+              <div class="form-error-title" *ngIf="formErrors.commQuality">
+                {{formErrors.commQuality}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--区域报警参数设置-->
+        <div *ngIf = 'currentOption === 8'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              转角三速(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="moveAreaWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.moveAreaWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.moveAreaWarning">
+                {{formErrors.moveAreaWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              转角二速(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="slewAreaWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.slewAreaWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.slewAreaWarning">
+                {{formErrors.slewAreaWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              转角一速(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="slewAreaAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.slewAreaAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.slewAreaAlarm">
+                {{formErrors.slewAreaAlarm}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              幅度高速(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="radiusAreaWarning" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.radiusAreaWarning}"/>
+              <div class="form-error-title" *ngIf="formErrors.radiusAreaWarning">
+                {{formErrors.radiusAreaWarning}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              幅度低速(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="radiusAreaAlarm" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.radiusAreaAlarm}"/>
+              <div class="form-error-title" *ngIf="formErrors.radiusAreaAlarm">
+                {{formErrors.radiusAreaAlarm}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--风速传感器和风速采样频率设置-->
+        <div *ngIf = 'currentOption === 9'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              传感器系数
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="windSensorRatio" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.windSensorRatio}"/>
+              <div class="form-error-title" *ngIf="formErrors.windSensorRatio">
+                {{formErrors.windSensorRatio}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              风速采样频率
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="windSamplingFre" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.windSamplingFre}"/>
+              <div class="form-error-title" *ngIf="formErrors.windSamplingFre">
+                {{formErrors.windSamplingFre}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--所属工程参数设置-->
+        <div *ngIf = 'currentOption === 11'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              工程名称
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="projectName" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.projectName}"/>
+              <div class="form-error-title" *ngIf="formErrors.projectName">
+                {{formErrors.projectName}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              工程地址
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace style="position: relative" (click)="addressClick($event)" pInputText type="text" formControlName="projectAdd" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.projectAdd}"/>
+              <div class="form-error-title" *ngIf="formErrors.projectAdd">
+                {{formErrors.projectAdd}}
+              </div>
+              <!--<app-area [areas]="areas" *ngIf='showArea' (doSoming)="getAddress($event)"></app-area>-->
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机型号
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <p-dropdown [options]="models" filter="true" [autoWidth]="false" styleClass ="ph-form-select"  formControlName="craneModel"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <!--主机箱版本-->
+        <div *ngIf = 'currentOption === 14 || currentOption === 15'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              软件版本
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace disabled pInputText type="text" formControlName="softwareVersion"
+                     [ngClass]="{'form-input-error': formErrors.softwareVersion}"/>
+              <div class="form-error-title" *ngIf="formErrors.softwareVersion">
+                {{formErrors.softwareVersion}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              扩展版本
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace disabled pInputText type="text" formControlName="softwareVersionEx"
+                     [ngClass]="{'form-input-error': formErrors.softwareVersionEx}"/>
+              <div class="form-error-title" *ngIf="formErrors.softwareVersionEx">
+                {{formErrors.softwareVersionEx}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              硬件版本
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace disabled pInputText type="text" formControlName="hardwareVersion"
+                     [ngClass]="{'form-input-error': formErrors.hardwareVersion}"/>
+              <div class="form-error-title" *ngIf="formErrors.hardwareVersion">
+                {{formErrors.hardwareVersion}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              硬件版本扩展
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace disabled pInputText type="text" formControlName="hardwareVersionEx"
+                     [ngClass]="{'form-input-error': formErrors.hardwareVersionEx}"/>
+              <div class="form-error-title" *ngIf="formErrors.hardwareVersionEx">
+                {{formErrors.hardwareVersionEx}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--维护参数设置-->
+        <div *ngIf = 'currentOption === 12'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              维护状态
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <p-dropdown [options]="states" styleClass ="ph-form-select" [autoWidth]="true"  formControlName="maintenanceStatus"></p-dropdown>
+            </div>
+          </div>
+        </div>
+        <!--角度限位开关-->
+        <div *ngIf = 'currentOption === 13'>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              开关状态
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <p-dropdown [options]="states" styleClass ="ph-form-select" [autoWidth]="true"  formControlName="switch2"></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 calibration" *ngIf="currentOption === 5">
+        <p-panel>
+          <p-header>
+            <div class="title">
+              <span>小车幅度标定</span>
+              <div class="word-color">
+                <span class="m-r-10">K：0</span>
+                <span>B：0</span>
+              </div>
+            </div>
+          </p-header>
+          <div class="content">
+            <div class="content-first ph-content-first">
+              <span class="content-first-left">当前电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></span>
+              <button type="button" label="读取电压" pButton class="green-btn small-size"></button>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第一步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第二步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+          </div>
+          <p-footer>
+            <button type="button" label="保存设置" pButton icon="fa-save" class="pc-button-large"></button>
+          </p-footer>
+        </p-panel>
+        <p-panel styleClass="m-t-10">
+          <p-header>
+            <div class="title">
+              <span>高度标定</span>
+              <div class="word-color">
+                <span class="m-r-10">K：0</span>
+                <span>B：0</span>
+              </div>
+            </div>
+          </p-header>
+          <div class="content">
+            <div class="content-first ph-content-first">
+              <span class="content-first-left">当前电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></span>
+              <button type="button" label="读取电压" pButton class="green-btn small-size"></button>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第一步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第二步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+          </div>
+          <p-footer>
+            <button type="button" label="保存设置" pButton icon="fa-save" class="pc-button-large"></button>
+          </p-footer>
+        </p-panel>
+        <p-panel styleClass="m-t-10">
+          <p-header>
+            <div class="title">
+              <span>吊重标定</span>
+              <div class="word-color">
+                <span class="m-r-10">K：0</span>
+                <span class="m-r-10">B：0</span>
+                <span class="m-r-10">K1：0</span>
+                <span>B1：0</span>
+              </div>
+            </div>
+          </p-header>
+          <div class="content">
+            <div class="content-first ph-content-first">
+              <span class="content-first-left">当前电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></span>
+              <button type="button" label="读取电压" pButton class="green-btn small-size"></button>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第一步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第二步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 pc-m-r-10 ph-m-b-5 step">第三步：</div>
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div class="m-r-40">电压（V）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+                <div>幅度（m）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class=" pc-m-r-20" pInputText type="text"/>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="OK" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+          </div>
+          <p-footer>
+            <button type="button" label="保存设置" pButton icon="fa-save" class="pc-button-large"></button>
+          </p-footer>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 calibration" *ngIf="currentOption === 6">
+        <p-panel>
+          <p-header>
+            <div class="title">
+              <span>回转角度标定</span>
+            </div>
+          </p-header>
+          <div class="content">
+            <div class="content-first ph-content-first">
+              <div class="content-first-left">
+                <span>方向：&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <p-selectButton [style]="{'white-space':'nowrap'}" [options]="directions" [(ngModel)]="direction"></p-selectButton>
+              </div>
+              <button type="button" label="保存设置" pButton class="green-btn small-size"></button>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 content-main-right ph-m-b-5">
+                <div>角度调整（°）：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <input class="m-r-40 ph-m-r-20"  pInputText type="text"/>
+                <div class="pc-m-r-20">当前角度（°）：&nbsp;&nbsp;&nbsp;&nbsp;<span class="word-color">0</span></div>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="保存设置" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+            <div class="content-main ui-g no-padding">
+              <div class="ui-sm-12 content-main-right ph-m-b-5 pc-m-r-20">
+                <div>区域随动：&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                <p-checkbox [(ngModel)]="checked" binary="true"></p-checkbox>
+              </div>
+              <div class="ui-sm-12 ph-m-b-5">
+                <button type="button" label="保存设置" pButton class="green-btn small-size"></button>
+              </div>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 calibration" *ngIf="currentOption === 10">
+        <p-panel>
+          <p-header>
+            <div class="title">
+              <span>本机参数设置</span>
+            </div>
+          </p-header>
+          <div class="table-autoFlow-x">
+            <p-dataTable [value]="craneStructure"  styleClass = 'minWidth2900' [rowHover] = 'false'>
+              <p-column field="num" header="编号"></p-column>
+              <p-column field="x" header="X(°)"></p-column>
+              <p-column field="y" header="Y(°)"></p-column>
+              <p-column field="craneType" header="塔机类型">
+                <ng-template let-crane="rowData" pTemplate="body">
+                  <span *ngIf = 'crane.craneType === 0'>平臂</span>
+                  <span *ngIf = 'crane.craneType === 1'>动臂</span>
+                  <span *ngIf = 'crane.craneType === 2'>塔头</span>
+                </ng-template>
+              </p-column>
+              <p-column field="length1" header="起重臂(m)"></p-column>
+              <p-column field="length2" header="平衡臂(m)"></p-column>
+              <p-column field="height1" header="塔机高(m)"></p-column>
+              <p-column field="height2" header="塔帽高(m)"></p-column>
+              <p-column field="width1" header="前桥宽(m)"></p-column>
+              <p-column field="width2" header="后桥宽(m)"></p-column>
+              <p-column field="length3" header="前拉杆距离(m)"></p-column>
+              <p-column field="height4" header="前桥桥高(m)"></p-column>
+              <p-column field="height3" header="配重下垂距离(m)"></p-column>
+              <p-column field="attachLength4" header="标准节边长(m)"></p-column>
+              <p-column field="height5" header="钢丝绳下垂距离(m)"></p-column>
+              <p-column field="defaultAngleNum" header="默认角度(°)"></p-column>
+              <p-column field="attachDefaultRadius" header="默认幅度(°)"></p-column>
+              <p-column field="attachHeight6" header="标准节高度(m)"></p-column>
+              <p-column field="attachLength1_1" header="动臂绞点(m)"></p-column>
+              <p-column  header="操作" headerStyleClass="width60">
+                <ng-template let-crane="rowData" let-i="rowIndex" pTemplate="body">
+                  <a href="javascript:void(0)" (click)="singleEdit()">编辑</a>
+                </ng-template>
+              </p-column>
+            </p-dataTable >
+          </div>
+        </p-panel>
+        <p-panel  styleClass="m-t-10">
+          <p-header>
+            <div class="title">
+              <span>相关塔机设置</span>
+            </div>
+          </p-header>
+          <div class="table-autoFlow-x">
+            <p-dataTable [value]="craneStructureExtra"  styleClass = 'minWidth2900' [rowHover] = 'false'>
+              <p-column field="craneNumber" header="编号"></p-column>
+              <p-column field="x" header="X(°)"></p-column>
+              <p-column field="y" header="Y(°)"></p-column>
+              <p-column field="craneType" header="塔机类型">
+                <ng-template let-crane="rowData" pTemplate="body">
+                  <span *ngIf = 'crane.craneType === 0'>平臂</span>
+                  <span *ngIf = 'crane.craneType === 1'>动臂</span>
+                  <span *ngIf = 'crane.craneType === 2'>塔头</span>
+                </ng-template>
+              </p-column>
+              <p-column field="l1" header="起重臂(m)"></p-column>
+              <p-column field="l2" header="平衡臂(m)"></p-column>
+              <p-column field="h1" header="塔机高(m)"></p-column>
+              <p-column field="h2" header="塔帽高(m)"></p-column>
+              <p-column field="k1" header="前桥宽(m)"></p-column>
+              <p-column field="k2" header="后桥宽(m)"></p-column>
+              <p-column field="l3" header="前拉杆距离(m)"></p-column>
+              <p-column field="h4" header="前桥桥高(m)"></p-column>
+              <p-column field="h3" header="配重下垂距离(m)"></p-column>
+              <p-column field="l4" header="标准节边长(m)"></p-column>
+              <p-column field="h5" header="钢丝绳下垂距离(m)"></p-column>
+              <p-column field="defaultAngle" header="默认角度(°)"></p-column>
+              <p-column field="defaultRadius" header="默认幅度(°)"></p-column>
+              <p-column field="h6" header="标准节高度(m)"></p-column>
+              <p-column  header="操作" headerStyleClass="width100" bodyStyleClass="operation">
+                <ng-template let-crane="rowData" let-i="rowIndex" pTemplate="body">
+                  <a *ngIf="isRead" href="javascript:void(0)" (click)="operatorCrane(1,crane)">编辑</a>
+                  <a *ngIf="isRead" href="javascript:void(0)" (click) = 'delete(crane)'>删除</a>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+          </div>
+          <p-footer>
+            <div class="pc-flex">
+              <button type="button" label="读取参数" pButton icon="fa-search" class="pc-button pc-button-large ph-button" (click)="getParams()"></button>
+              <button type="button" label="添加塔机" [disabled]="craneStructureExtra.length > 10 || !isRead" pButton icon="fa-plus" class="pc-button pc-button-large ph-button" (click) = 'operatorCrane(0,{})'></button>
+              <button type="button" label="保存设置" [disabled]="craneStructureExtra.length > 10 || !isRead" pButton icon="fa-save" class="pc-button pc-button-large ph-button" (click) = 'saveTowerGroup()'></button>
+              <div *ngIf = 'responseMark !== "load" && currentOption === 10' class="ui-sm-12 params-style ph-font-size-13">
+                <div>{{responseMark === 'read' ? '读取':'设置'}}状态：<span [ngClass]="{'color-red' : !responseInfo.state}">{{responseInfo.state ? '成功':'失败'}}</span></div>
+                <div *ngIf="responseInfo.state">{{responseMark === 'read' ? '读取':'设置'}}时间：<span>{{responseInfo.time}}</span></div>
+              </div>
+            </div>
+          </p-footer>
+        </p-panel>
+      </div>
+    </div>
+  </div>
+</div>
+

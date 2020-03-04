@@ -1,0 +1,101 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+  </div>
+  <div class="body-content">
+    <div class="search no-padding">
+      <div class="ui-sm-12 pc-input ph-input">
+        <input type="text" [(ngModel)] = 'searchValue' id="input" pInputText placeholder="请输入工程名称、单位电话查询">
+      </div>
+      <div class="ui-sm-12">
+        <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+      </div>
+    </div>
+    <div class="card" [ngStyle]="flowStyle">
+      <div class="table-autoFlow-x">
+        <p-table [value]="projects" dataKey="projectId" [customSort]="true" [(selection)]="selectedProject" (onRowExpand) = 'exportRow($event)'  styleClass = 'minWidth1000' [rowHover] = 'true'>
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th class="text-left">工程名称</th>
+              <th class="scale20">施工单位</th>
+              <th class="width100">工地电话</th>
+              <th class="width100">塔机数量</th>
+              <th class="width100">状态</th>
+              <th class="width100">操作</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-rowData let-i='rowIndex' let-expanded="expanded">
+            <tr class="cursor-point" [pRowToggler]="rowData" (click)="rowClick(rowData.projectId)" [ngClass]="{'click-row':rowData.projectId === index,'ui-state-highlight':rowData.projectId === index}">
+              <td class="text-left">{{rowData.projectName}}</td>
+              <td>{{rowData.workCompanyName}}</td>
+              <td>{{rowData.telephone}}</td>
+              <td>{{rowData.craneCount}}</td>
+              <td>
+                <span *ngIf = 'rowData.status == 0' class="color-red">施工中</span>
+                <span *ngIf = 'rowData.status == 1' class="color-gray">停工</span>
+                <span *ngIf = 'rowData.status == 2' class="color-green">竣工</span>
+              </td>
+              <td>
+                  <span>
+                    <a *ngIf ="controlAuth.add" href="javascript:void(0)" (click)="operations('cranelistadd',rowData.projectId)">新增塔机</a>
+                  </span>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template let-project pTemplate="rowexpansion">
+            <tr class="ui-expanded-row-content" >
+              <td colspan="6" class="border-none">
+                <p-table [value]="cranesList['cranes' + project.projectId]"  [customSort]="true" styleClass = 'expand-table pc-expand-table ph-expand-table' [rowHover] = 'false'>
+                  <ng-template pTemplate="body" let-rowData let-i='rowIndex'>
+                    <tr>
+                      <td class="text-left width200" *ngIf="!(i%2)" rowspan="2"  [ngClass]="{'no-bottom-border':i === cranesList['cranes' + project.projectId].length - 2}">
+                        <div class="item-craneName">
+                          <span>{{rowData.craneNumber}}</span>
+                          <a  href="javascript:void(0)" *ngIf="controlAuth.operator" (click)="operations('operatormanage',project.projectId,rowData.craneId)"  title="绑定操作员">
+                            <img src="assets/images/crane-operator.png" class="image25">
+                            <div class="crane-operator-num">{{rowData.personalCount || 0}}</div>
+                          </a>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="snDiv">
+                          <i *ngIf="!(i%2)" title="防碰撞设备" class="fa fa-desktop" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                          <i *ngIf="i%2" title="视频设备" class="fa fa-video-camera" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                          <span *ngIf="!!rowData.sn" class="snSpan">{{rowData.sn}}</span>
+                          <span *ngIf="!rowData.sn" class="snSpan color-gray">—</span>
+                        </div>
+                      </td>
+                      <td>
+                        <i class="fa fa-signal font-size16" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                      </td>
+                      <td class="width120 operation last-td" *ngIf="!(i%2)"  rowspan="2" [ngClass]="{'no-bottom-border':i === cranesList['cranes' + project.projectId].length - 2}">
+                        <span>
+                          <a *ngIf="controlAuth.edit" href="javascript:void(0)"  (click)="operations('cranelistedit',project.projectId,rowData.craneId)">编辑</a>
+                          <a href="javascript:void(0)"   (click)="operations('clockrecord',project.projectId,rowData.craneId)">打卡记录</a>
+                        </span>
+                      </td>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6" class="color-no-data">暂无数据</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6">暂无数据</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+    <div class="paginator">
+      <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+      <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+    </div>
+  </div>
+</div>
+

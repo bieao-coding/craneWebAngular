@@ -1,0 +1,37 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" label="添加" *ngIf="controlAuth.add" pButton icon="fa-plus" class="pc-button-small" (click) = 'addVersion()'></button>
+    </div>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-input ph-input">
+          <input input-noSpace type="text" [(ngModel)] = 'versionName' id="input" pInputText placeholder="版本名称">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="versions"  styleClass = 'minWidth1000' [rowHover] = 'true'>
+            <p-column field="versionName" header="版本名称"></p-column>
+            <p-column field="md5" header="MD5"></p-column>
+            <p-column field="fileSize" header="文件大小"></p-column>
+            <p-column field="insertTime" header="上传时间"></p-column>
+            <p-column header="操作" headerStyleClass="width60" bodyStyleClass="operation">
+              <ng-template let-version="rowData" let-i="rowIndex" pTemplate="body">
+                <a *ngIf="controlAuth.delete" href="javascript:void(0)"  (click)="delete(version)">删除</a>
+              </ng-template>
+            </p-column>
+          </p-dataTable >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

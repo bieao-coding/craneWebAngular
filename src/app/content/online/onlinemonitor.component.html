@@ -1,0 +1,103 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-input ph-input">
+          <input input-noSpace type="text" [(ngModel)] = 'searchValue' id="input" pInputText placeholder="请输入工程名称">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card"  [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-table [value]="projects" dataKey="projectId" [customSort]="true" [(selection)]="selectedProject"  styleClass = 'minWidth800' (onRowExpand) = 'exportRow($event)' [rowHover] = 'true' >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th class="text-left">工程名称</th>
+                <th class="scale20">施工单位</th>
+                <th class="width100">塔机数量</th>
+                <th class="width120">防碰撞在线量</th>
+                <th class="width120">视频在线量</th>
+                <th class="width100">操作</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-i='rowIndex' let-expanded="expanded">
+              <tr class="cursor-point" [pRowToggler]="rowData" (click)="rowClick(rowData.projectId)" [ngClass]="{'click-row':rowData.projectId === index,'ui-state-highlight':rowData.projectId === index}">
+                <td class="text-left">{{rowData.projectName}}</td>
+                <td>{{rowData.workCompanyName}}</td>
+                <td>{{rowData.craneCount}}</td>
+                <td>{{rowData.antiOnlineCount}}</td>
+                <td>{{rowData.videoOnlineCount}}</td>
+                <td>
+                  <span>
+                    <a *ngIf ="controlAuth.spread" href="javascript:void(0)" (click)="operations('cranespread',rowData.projectId)">塔机分布</a>
+                  </span>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template let-project pTemplate="rowexpansion">
+              <tr class="ui-expanded-row-content" >
+                <td colspan="6" class="border-none">
+                  <p-table [value]="cranesList['cranes' + project.projectId]"  [customSort]="true" styleClass = 'expand-table pc-expand-table ph-expand-table' [rowHover] = 'false'>
+                    <ng-template pTemplate="body" let-rowData let-i='rowIndex'>
+                      <tr>
+                        <td class="text-left width200" *ngIf="!(i%2)" rowspan="2"  [ngClass]="{'no-bottom-border':i === cranesList['cranes' + project.projectId].length - 2}">
+                          <div class="item-craneName">
+                            <span>{{rowData.craneNumber}}</span>
+                            <a *ngIf ="controlAuth.side && !!rowData.sn && (rowData.craneType === 0 || rowData.craneType === 2)" href="javascript:void(0)" class="image25" (click)="operations('sideviewPing',project.projectId,rowData)" title="塔机侧视图">
+                              <img src="assets/images/crane1.png" class="image25">
+                            </a>
+                            <a *ngIf ="controlAuth.side && !!rowData.sn && rowData.craneType === 1" href="javascript:void(0)" class="image25" (click)="operations('sideviewDong',project.projectId,rowData)" title="塔机侧视图">
+                              <img src="assets/images/crane1.png" class="image25">
+                            </a>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="snDiv">
+                            <i *ngIf="!(i%2)" title="防碰撞设备" class="fa fa-desktop" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                            <i *ngIf="i%2" title="视频设备" class="fa fa-video-camera" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                            <span *ngIf="!!rowData.sn" class="snSpan">{{rowData.sn}}</span>
+                            <span *ngIf="!rowData.sn" class="snSpan color-gray">—</span>
+                          </div>
+                        </td>
+                        <td>
+                          <i class="fa fa-signal font-size16" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                        </td>
+                        <td class="width180 operation">
+                          <span>
+                          <a *ngIf ="controlAuth.antiRun && !(i%2)" href="javascript:void(0)" (click)="operations('rundata',project.projectId,rowData)"  [ngClass]="{'disable-a':!rowData.sn}">运行数据</a>
+                          <a *ngIf ="controlAuth.antiWorkData && !(i%2)" href="javascript:void(0)" (click)="operations('workdata',project.projectId,rowData)" [ngClass]="{'disable-a':!rowData.sn}">吊重数据</a>
+                          <a *ngIf ="controlAuth.antiRunTime && !(i%2)" href="javascript:void(0)" (click)="operations('runtime',project.projectId,rowData)" [ngClass]="{'disable-a':!rowData.sn}">运行时间</a>
+                          <a *ngIf ="controlAuth.videoRunTime && (i%2)" href="javascript:void(0)" (click)="operations('videoruntime',project.projectId,rowData)" [ngClass]="{'disable-a':!rowData.sn}">运行时间</a>
+                          <a *ngIf ="controlAuth.liveVideo && (i%2)" href="javascript:void(0)" (click)="operations('livevideo',project.projectId,rowData)" [ngClass]="{'disable-a':!rowData.sn}">视频直播</a>
+                          <a *ngIf ="controlAuth.recordedVideo && (i%2)" href="javascript:void(0)" (click)="operations('recordedvideo',project.projectId,rowData)" [ngClass]="{'disable-a':!rowData.online || !rowData.sn}" >视频点播</a>
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="6" class="color-no-data">暂无数据</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6">暂无数据</td>
+              </tr>
+            </ng-template>
+          </p-table >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

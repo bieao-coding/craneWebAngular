@@ -1,0 +1,22 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="deviceForm" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            SN
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text" formControlName="sn" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.sn}"/>
+            <div class="form-error-title" *ngIf="formErrors.sn">
+              {{formErrors.sn}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <button pButton type="submit" [disabled]="deviceForm.invalid" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+  </div>
+</div>
+

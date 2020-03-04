@@ -1,0 +1,9 @@
+@import './livevideo.component.scss';
+.video-column{
+  align-items: center;
+}
+@media screen and (min-width: 40.063em) {
+  .pc-range-left{
+    text-align: right;
+  }
+}

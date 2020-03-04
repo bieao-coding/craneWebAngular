@@ -1,0 +1,41 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" label="添加" pButton *ngIf="controlAuth.add" icon="fa-plus" class="pc-button-small" (click) = 'addOperator()'></button>
+    </div>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-input ph-input">
+          <input type="text" [(ngModel)] = 'searchValue' id="input" pInputText placeholder="请输入姓名、身份证">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="operators" [(selection)]="selectedOperator"   styleClass = 'minWidth500' [rowHover] = 'true'>
+            <p-column field="personalName" header="操作人员">
+              <ng-template let-feature="rowData" pTemplate="body">
+                <span>{{feature.personalName}}</span>
+              </ng-template>
+            </p-column>
+            <p-column field="identityCard" header="身份证号"></p-column>
+            <p-column header="操作" [style]="{'width':controlAuth.number + 'px'}" bodyStyleClass="operation">
+              <ng-template let-operator="rowData" let-i="rowIndex" pTemplate="body">
+                <a href="javascript:void(0)" (click)="operations('operatoredit',operator.personalId)" *ngIf="controlAuth.edit">编辑</a>
+                <a href="javascript:void(0)" (click)="operations('operatorfeature',operator.personalId,operator.identityCard)" *ngIf="controlAuth.feature">特征信息</a>
+                <a href="javascript:void(0)" (click)="delete(operator)" *ngIf="controlAuth.delete">删除</a>
+              </ng-template>
+            </p-column>
+          </p-dataTable >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

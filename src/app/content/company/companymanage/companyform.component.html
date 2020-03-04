@@ -1,0 +1,73 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="companyform" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            单位名称
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="companyName" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.companyName}"/>
+            <div class="form-error-title" *ngIf="formErrors.companyName">
+              {{formErrors.companyName}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            业务类型
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-multiSelect [options]="typeList" defaultLabel = '请选择'  formControlName="typeList" optionLabel="businessTypeName"
+                           [styleClass]="formErrors.typeList ? 'form-input-error':''"></p-multiSelect>
+            <div class="form-error-title" *ngIf="formErrors.typeList">
+              {{formErrors.typeList}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            法人代表
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="legalPerson" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.legalPerson}"/>
+            <div class="form-error-title" *ngIf="formErrors.legalPerson">
+              {{formErrors.legalPerson}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            网站地址
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="webSite" />
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            单位电话
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="telephone" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.telephone}"/>
+            <div class="form-error-title" *ngIf="formErrors.telephone">
+              {{formErrors.telephone}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            单位传真
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="fax"  [(ngModel)] = 'company.fax'/>
+          </div>
+        </div>
+        <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <button pButton type="submit" *ngIf="formAuth.save" [disabled]="companyform.invalid" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+    </div>
+</div>

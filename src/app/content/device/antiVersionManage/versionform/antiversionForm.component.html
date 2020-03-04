@@ -1,0 +1,34 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="versionForm" id="form" class="ui-md-12 ui-sm-12 no-padding" enctype="multipart/form-data">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            版本名称
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input pInputText type="text" formControlName="softwareName" disabled placeholder="必填"/>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            上传版本
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <div tabindex="0" class="el-upload">
+              <button type="button" (click)="chooseFile()" class="el-button cursor-point">
+                <span>{{versionForm.valid && this.file ? this.file.name : '点击上传'}}</span>
+              </button>
+              <input type="file" name="file" accept=".bin" formControlName="file" (change)="changeFile($event)" class="el-upload_input">
+            </div>
+            <div class="form-error-title" *ngIf="formErrors.file">
+              {{formErrors.file}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 form-item m-t-10">
+          <button pButton type="submit" [disabled]="versionForm.invalid" (click)="submit()" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+  </div>
+</div>
+

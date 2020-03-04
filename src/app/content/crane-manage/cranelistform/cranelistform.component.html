@@ -1,0 +1,77 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="craneform" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            塔机编号
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="craneNumber"  placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.craneNumber,'disable-a':!!this.craneId}"/>
+            <div class="form-error-title" *ngIf="formErrors.craneNumber">
+              {{formErrors.craneNumber}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            防碰撞SN
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="sns" styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="sn"
+                        [styleClass]="formErrors.sn ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.sn">
+              {{formErrors.sn}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            视频SN
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="videoSns"  styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="videoSn"
+                        [styleClass]="formErrors.videoSn ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.videoSn">
+              {{formErrors.videoSn}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            生产厂商
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="works" (onChange) = 'findModels($event)' styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="factoryId"
+                        [styleClass]="formErrors.factoryId ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.factoryId">
+              {{formErrors.factoryId}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            塔机型号
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="models" styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="modelId"
+                        [styleClass]="formErrors.modelId ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.modelId">
+              {{formErrors.modelId}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            塔机类型
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="types" styleClass ="ph-form-select" [autoWidth]="false"  formControlName="typeId"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <button pButton type="submit" *ngIf="formAuth.save" [disabled]="craneform.invalid" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+  </div>
+</div>

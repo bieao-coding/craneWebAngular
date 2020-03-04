@@ -1,0 +1,227 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" label="保存" pButton icon="fa-save" [disabled]="settingForm.invalid"  class="pc-button-small" (click)="saveTemporary()"></button>
+    </div>
+    <div class="ui-g ui-g-12 card" [ngStyle]="flowStyle">
+      <form [formGroup]="settingForm" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <!--塔机结构参数设置-->
+        <div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机编号
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace  pInputText type="text" formControlName="craneNumber" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.craneNumber,'disable-a':center.isEdit}"/>
+              <div class="form-error-title" *ngIf="formErrors.craneNumber">
+                {{formErrors.craneNumber}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机类型
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <p-dropdown [options]="types" styleClass ="ph-form-select" [(ngModel)]="type" [autoWidth]="true"  formControlName="craneType"></p-dropdown>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              工地坐标X(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="x" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.x}"/>
+              <div class="form-error-title" *ngIf="formErrors.x">
+                {{formErrors.x}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              工地坐标Y(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="y" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.y}"/>
+              <div class="form-error-title" *ngIf="formErrors.y">
+                {{formErrors.y}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              起重臂(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="l1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.l1}"/>
+              <div class="form-error-title" *ngIf="formErrors.l1">
+                {{formErrors.l1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              平衡臂(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="l2" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.l2}"/>
+              <div class="form-error-title" *ngIf="formErrors.l2">
+                {{formErrors.l2}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔机高(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="h1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.h1}"/>
+              <div class="form-error-title" *ngIf="formErrors.h1">
+                {{formErrors.h1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 2 || type === 3">
+            <div class="ui-sm-12 pc-form-label form-label">
+              塔帽高(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="h2" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.h2}"/>
+              <div class="form-error-title" *ngIf="formErrors.h2">
+                {{formErrors.h2}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              默认角度(°)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="defaultAngle" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.defaultAngle}"/>
+              <div class="form-error-title" *ngIf="formErrors.defaultAngle">
+                {{formErrors.defaultAngle}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              默认幅度(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="defaultRadius" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.defaultRadius}"/>
+              <div class="form-error-title" *ngIf="formErrors.defaultRadius">
+                {{formErrors.defaultRadius}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              配重下垂距离(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="h3" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.h3}"/>
+              <div class="form-error-title" *ngIf="formErrors.h3">
+                {{formErrors.h3}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 1 || type === 3">
+            <div class="ui-sm-12 pc-form-label form-label">
+              钢丝绳下垂距离(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="h5" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.h5}"/>
+              <div class="form-error-title" *ngIf="formErrors.h5">
+                {{formErrors.h5}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              前桥高(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="h4" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.h4}"/>
+              <div class="form-error-title" *ngIf="formErrors.h4">
+                {{formErrors.h4}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              前桥宽(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="k1" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.k1}"/>
+              <div class="form-error-title" *ngIf="formErrors.k1">
+                {{formErrors.k1}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              后桥宽(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="k2" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.k2}"/>
+              <div class="form-error-title" *ngIf="formErrors.k2">
+                {{formErrors.k2}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              标准节边长(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="l4" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.l4}"/>
+              <div class="form-error-title" *ngIf="formErrors.l4">
+                {{formErrors.l4}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+            <div class="ui-sm-12 pc-form-label form-label">
+              标准节高度(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="h6" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.h6}"/>
+              <div class="form-error-title" *ngIf="formErrors.h6">
+                {{formErrors.h6}}
+              </div>
+            </div>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="type === 3">
+            <div class="ui-sm-12 pc-form-label form-label">
+              前拉杆距离(m)
+            </div>
+            <div class="ui-md-4 ui-sm-12 form-input">
+              <input input-noSpace pInputText type="text" formControlName="l3" placeholder="必填"
+                     [ngClass]="{'form-input-error': formErrors.l3}"/>
+              <div class="form-error-title" *ngIf="formErrors.l3">
+                {{formErrors.l3}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

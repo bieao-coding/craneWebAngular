@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>林丰电子塔机安全监控系统</title>
+  <base href="/">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/layout-blue.css">
+  <link id="theme-css" rel="stylesheet" type="text/css" href="assets/theme/theme-light.css">
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nNmAXovtkdTGjYnPfhnUqnYopPlHSsGA"></script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+<script>
+  const clickTab = function(event,value){
+   if(!value){
+     event.target.className = 'click-bg';
+     event.target.nextElementSibling.className = '';
+     document.getElementById('deviceInfo').style.display = 'none';
+     document.getElementById('baseInfo').style.display = 'block';
+   }else{
+     event.target.className = 'click-bg';
+     event.target.previousElementSibling.className = '';
+     document.getElementById('deviceInfo').style.display = 'block';
+     document.getElementById('baseInfo').style.display = 'none';
+   }
+  }
+</script>
+</html>

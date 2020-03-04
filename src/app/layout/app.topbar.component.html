@@ -1,0 +1,25 @@
+<div class="topbar">
+    <div class="topbar-left">
+      <i class="fa fa-align-left menu-button" (click)="app.onMenuButtonClick($event,0)"></i>
+      <span class="company-name">Liinv 林丰电子(1.1.80)</span>
+    </div>
+    <div class="topbar-right">
+      <span class="ui-inputswitch m-r-20" [ngClass]="{'ui-inputswitch-checked':isDark}" (click)="themeChange($event)"></span>
+      <i class="fa fa-arrows-alt topbar-full-screen" *ngIf="showFullScreen" (click)="fullScreen($event)"></i>
+
+      <div href="#" class="topbar-login-info" (click)="app.onTopbarMenuButtonClick($event)">
+        <span class="username" *ngIf="showName" [title]="loginName">{{loginName}}</span>
+        <img class="login-picture" src="assets/images/user.png" [title]="loginName" />
+        <i class="fa fa-angle-down"></i>
+      </div>
+
+      <ul class="topbar-menu fadeInDownTwo" [ngClass]="{'topbar-menu-visible': app.topbarMenuActive}">
+        <li>
+          <a href="javascript:void(0)" (click)="logout()">
+            <i class="fa fa-sign-out"></i>
+            <span>退&nbsp;&nbsp;出</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+</div>

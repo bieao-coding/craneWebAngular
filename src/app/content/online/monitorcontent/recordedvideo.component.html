@@ -1,0 +1,50 @@
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-label ph-label">
+          开始时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="beginTime" [readonlyInput]="true"  dateFormat="yy-mm-dd" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" yearRange="1970:2030" styleClass = 'calendar-month-year'></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-label ph-label">
+          结束时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="endTime" [maxDate]="now"  [readonlyInput]="true" dateFormat="yy-mm-dd" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true"  yearRange="1970:2030" styleClass="calendar-month-year"></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-button ph-button">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+        <div class="ui-sm-12" >
+          <button type="button" label="刷新" pButton icon="fa-refresh" class="pc-button-small" (click)="refresh()"></button>
+        </div>
+      </div>
+      <div class="ui-g-12 card">
+        <p-tabView (onChange)="tabChange($event)">
+          <p-tabPanel header="选择视频" leftIcon="fa-file-text">
+            <div class="ui-md-5 ui-sm-12 tree" [ngStyle]="{'height.px': maxHeight,'overflow':'auto'}">
+              <p-tree [value]="allVideo" selectionMode="single" [(selection)]="selected" (onNodeSelect) = 'nodeSelected($event)' styleClass = "tree-content"></p-tree>
+            </div>
+          </p-tabPanel>
+          <p-tabPanel header="视频播放" leftIcon="fa-video-camera" [disabled]="disableVideo">
+            <div class="ui-g ui-md-12 ui-sm-12 video-column">
+              <div class="pc-range-left ui-md-2 ui-sm-12">{{rangeInfo.changeBegin}}</div>
+              <div class="ui-md-8 ui-sm-12"><p-slider [(ngModel)]="time" [min]="0" [max]="rangeInfo.data" [style]="{'width':'100%'}" (onChange) = 'showValue($event)' (onSlideEnd) = 'whenEnd()'></p-slider></div>
+              <div class="ui-md-2 ui-sm-12">{{rangeInfo.rangeEnd}}</div>
+            </div>
+            <div class="ui-md-12 ui-sm-12 player" [ngStyle]="{'height.px': maxHeight - 46}">
+              <div id ="loading-before">
+                <h1 *ngIf = '!crane.online' class="no-line">该设备不在线</h1>
+                <img *ngIf = 'crane.online && clickButton' src="../../../assets/images/loading.gif"/>
+              </div>
+              <div class="prism-player"  id="video"></div>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>
+

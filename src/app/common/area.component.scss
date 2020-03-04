@@ -1,0 +1,47 @@
+.content{
+  position: absolute;
+  display: flex;
+  z-index: 1004;
+  top: 35px;
+  left: 0;
+  width: 100%;
+  transition: all 0.5s ease;
+  outline: none;
+  border: 0;
+  .province{
+    margin: -1px 0;
+    padding: 0;
+    width: 30%;
+    border: 0 none;
+    overflow: auto;
+    height: 204px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 1px 2px 4px rgba(0, 0, 0, 0.3);
+    li{
+      font-size: 14px;
+      padding: 8px 10px;
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 34px;
+      line-height: 1.5;
+      box-sizing: border-box;
+      cursor: pointer;
+      outline: none;
+      list-style: none;
+    }
+    li:hover{
+      color: #fff;
+    }
+    li:not(.last-item):after{
+      font-family: FontAwesome;
+      content: "\f105";
+      font-size: 14px;
+      position: absolute;
+      right: 15px;
+    }
+  }
+}
+

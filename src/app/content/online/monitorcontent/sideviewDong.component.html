@@ -1,0 +1,40 @@
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class="body-content">
+      <div class="ui-g card no-table ph-flex-column" id="cloth" [ngStyle]="{'height.px': maxHeight,'margin-top':'0'}">
+        <div id="container" class="ui-md-8 ui-sm-12 left-side"></div>
+          <div class="ui-md-4 ui-sm-12 right-side">
+            <div class="ui-g ui-md-10 ui-sm-12 content-info" *ngIf = 'showInfo'>
+              <div class="ui-md-12 ui-sm-12 info-name">
+                <span>塔机详参<span class="color-yellow">（{{currentTime|date:'yyyy-MM-dd HH:mm:ss'}}）</span></span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">塔机编号</span><span class="word ui-sm-12">{{craneData.craneNumber}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">塔机高度（m）</span><span class="word ui-sm-12">{{craneData.craneHeight}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">塔机类型</span><span class="word ui-sm-12">{{crane.craneType === '1' ? '动臂':'平臂'}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">仰角（°）</span><span class="word ui-sm-12">{{craneData.elevationAngle}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">臂长（m）</span><span class="word ui-sm-12">{{craneData.armLength}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item">
+                <span class="title ui-md-5 ui-sm-12">吊绳长度（m）</span><span class="word ui-sm-12">{{craneData.height}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item remove-bottom">
+                <span class="title ui-md-5 ui-sm-12">幅度（m）</span><span class="word ui-sm-12">{{craneData.radius}}</span>
+              </div>
+              <div class="ui-g ui-md-12 ui-sm-6 title-item remove-bottom">
+                <span class="title ui-md-5 ui-sm-12">吊重（t）</span><span class="word ui-sm-12">{{craneData.loadValue}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

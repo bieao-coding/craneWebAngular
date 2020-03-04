@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="roleListAdd" datatype="html">
+        <source>Add</source>
+        <target>Add</target>
+      </trans-unit>
+      <trans-unit id="roleListholder" datatype="html">
+        <source>RoleName</source>
+        <target>RoleName</target>
+      </trans-unit>
+      <trans-unit id="roleListSearch" datatype="html">
+        <source>Search</source>
+        <target>Search</target>
+      </trans-unit>
+      <trans-unit id="roleFormSubmit" datatype="html">
+        <source>Submit</source>
+        <target>Submits</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

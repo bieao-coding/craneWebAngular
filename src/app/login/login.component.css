@@ -1,0 +1,18 @@
+@import url('../../assets/theme/theme-blue-light.css');
+@import url('../../assets/layout/css/layout-blue-light.css');
+@import url('../../assets/pages/grid.css');
+.left-side{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-10%);
+  transform: translateY(-220%);
+}
+.right-side{
+  position: absolute;
+  top:50%;
+  transform: translateY(-50%);
+}
+.login-container{
+  padding-top: 0 !important;
+}

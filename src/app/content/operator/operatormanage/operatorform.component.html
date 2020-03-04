@@ -1,0 +1,33 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="operatorform" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            人员姓名
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="personalName" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.personalName}"/>
+            <div class="form-error-title" *ngIf="formErrors.personalName">
+              {{formErrors.personalName}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            身份证号
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="identityCard" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.identityCard,'disable-a':!!operatorId}"/>
+            <div class="form-error-title" *ngIf="formErrors.identityCard">
+              {{formErrors.identityCard}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <button pButton type="submit" *ngIf="formAuth.save"  [disabled]="operatorform.invalid" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+/*card类下面不是table的样式*/
+.no-table{
+  width: 100%;
+  overflow: auto;
+  padding: 0;
+  background-color: #141e27;
+  .left-side{
+    overflow: hidden;
+  }
+  .title-item{
+    border-bottom: 1px solid #3e3d3d;
+    span{
+      padding: 0;
+    }
+  }
+  .title-item:nth-child(odd){
+    background-color:#1b3548;
+  }
+  .title-item:nth-child(even){
+    background-color:#1c2937;
+  }
+  .title-item:last-child{
+    border-bottom: none;
+  }
+  .title-item:hover{
+    background-color: #39a3f4;
+    cursor: pointer;
+    span.title{
+      background: none;
+      color: #fff;
+    }
+  }
+  .info-name{
+    font-size: 15px;
+    color: #ffff;
+    text-align: center;
+    background-color: #2274b1;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+  }
+  span.title{
+    font-size: 10px;
+    font-weight: bold;
+    background: linear-gradient(to bottom, #ffffff, #39a3f4);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  span.word{
+    color:yellow;
+  }
+}
+@media screen and (max-width: 40em) {
+  .title-item{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #3e3d3d;
+    border-left: none;
+    border-right: none;
+  }
+  .remove-bottom{
+    border-bottom: none !important;
+  }
+  .ph-flex-column{
+    flex-flow: column;
+  }
+}

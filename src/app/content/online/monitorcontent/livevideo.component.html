@@ -1,0 +1,44 @@
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class="body-content">
+      <div class="search ui-g no-padding">
+        <div class="current-title width220 ui-sm-12">
+          <div class="main-info pc-button ph-button">
+            <span>
+              {{crane.craneNumber}}（{{crane.sn}}）
+            </span>
+            <i class="fa fa-signal" class="font-size16" [ngClass]="{'online':crane.online === 'true','offline':crane.online === 'false'}"></i>
+          </div>
+        </div>
+        <div class="ui-g ui-sm-12">
+          <div class="ui-sm-12">
+            <button type="button" label='吊钩' [disabled]="crane.online === 'false'"  (click) = 'click("MainHook")' pButton icon="fa-video-camera" class="pc-button-small pc-button ph-button ph-m-t-10" [ngClass] = '{"click-color":currentButton === "MainHook"}'></button>
+          </div>
+          <div class="ui-sm-12">
+            <button type="button" label='前桥' [disabled]="crane.online === 'false'" (click) = 'click("Jib")' pButton icon="fa-video-camera" class="pc-button-small pc-button ph-button" [ngClass] = '{"click-color":currentButton === "Jib"}'></button>
+          </div>
+          <div class="ui-sm-12">
+            <button type="button" label='后桥' [disabled]="crane.online === 'false'" (click) = 'click("CounterJib")' pButton icon="fa-video-camera" class="pc-button-small pc-button ph-button" [ngClass] = '{"click-color":currentButton === "CounterJib"}'></button>
+          </div>
+          <div class="ui-sm-12">
+            <button type="button" label='驾驶室' [disabled]="crane.online === 'false'" (click) = 'click("Cabin")' pButton icon="fa-video-camera" class="pc-button-middle pc-button ph-button" [ngClass] = '{"click-color":currentButton === "Cabin"}'></button>
+          </div>
+          <div class="ui-sm-12">
+            <button type="button" label='显示屏' [disabled]="crane.online === 'false'" (click) = 'click("Screen")' pButton icon="fa-video-camera" class="pc-button-middle pc-button" [ngClass] = '{"click-color":currentButton === "Screen"}'></button>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 card margin-top1 player" [ngStyle]="{'height.px': maxHeight}">
+        <div id="loading-before">
+          <h1 *ngIf = "crane.online === 'false'" class="no-line">该设备不在线</h1>
+          <div *ngIf = "crane.online === 'true'">
+            <h2 *ngIf = '!clickButton' class="choose-video">请选择要观看的视频</h2>
+            <img *ngIf = 'clickButton' src="../../../assets/images/loading.gif"/>
+          </div>
+        </div>
+        <div class="prism-player"  id="video"></div>
+      </div>
+    </div>
+  </div>
+</div>
+

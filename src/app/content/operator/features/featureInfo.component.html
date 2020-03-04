@@ -1,0 +1,25 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="features" styleClass = 'minWidth500' [rowHover] = 'true'>
+            <p-column field="identityCard" header="身份证号"></p-column>
+            <p-column field="photo" header="人脸">
+              <ng-template let-feature="rowData" pTemplate="body">
+                <img [src]="'data:image/png;base64,'+ feature.photo" class="image64"/>
+              </ng-template>
+            </p-column>
+            <p-column field="fingerprint" header="指纹">
+              <ng-template let-feature="rowData" pTemplate="body">
+                <i *ngIf="!!feature.fingerprint" class="fa fa-check-circle color-green font-size20" ></i>
+              </ng-template>
+            </p-column>
+            <p-column field="insertTime" header="录入时间"></p-column>
+          </p-dataTable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

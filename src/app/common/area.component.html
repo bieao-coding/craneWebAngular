@@ -1,0 +1,14 @@
+<div class="content" tabindex="-1" (blur)="upAddress()">
+  <ul class="province">
+    <li *ngFor="let item of province" (click)="getCities($event,item)" [title]="item.name" [ngClass]="{'click-color':item.name === currentProvince}">{{item.name}}</li>
+  </ul>
+  <ul class="province" *ngIf="cities.length && !isSpecial">
+    <li *ngFor="let item of cities" (click)="getCountries($event,item)" [title]="item.name" [ngClass]="{'click-color':item.name === currentCity}">{{item.name}}</li>
+  </ul>
+  <ul class="province" *ngIf="cities.length && isSpecial">
+    <li *ngFor="let item of cities" (click)="chooseAddress(item)" [title]="item" class="last-item">{{item}}</li>
+  </ul>
+  <ul class="province" *ngIf="country.length">
+    <li *ngFor="let item of country" class="last-item" (click)="chooseAddress(item)" [title]="item">{{item}}</li>
+  </ul>
+</div>

@@ -1,0 +1,129 @@
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="projectform" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            工程名称
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="projectName" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.projectName}"/>
+            <div class="form-error-title" *ngIf="formErrors.projectName">
+              {{formErrors.projectName}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            施工许可证
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="workPermit" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.workPermit}"/>
+            <div class="form-error-title" *ngIf="formErrors.workPermit">
+              {{formErrors.workPermit}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            负责人
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text" formControlName="manager" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.manager}"/>
+            <div class="form-error-title" *ngIf="formErrors.manager">
+              {{formErrors.manager}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            工地电话
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text" formControlName="telephone" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.telephone}"/>
+            <div class="form-error-title" *ngIf="formErrors.telephone">
+              {{formErrors.telephone}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            施工单位
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="workCompanies" styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="workCompanyId"
+                        [styleClass]="formErrors.workCompanyId ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.workCompanyId">
+              {{formErrors.workCompanyId}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            建设单位
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="buildCompanies" styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="buildCompanyId"
+                        [styleClass]="formErrors.buildCompanyId ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.buildCompanyId">
+              {{formErrors.buildCompanyId}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            监理单位
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="supervisionCompanies" styleClass ="ph-form-select" filter="true" [autoWidth]="false"  formControlName="supervisionCompanyId"
+                        [styleClass]="formErrors.supervisionCompanyId ? 'form-input-error':''"></p-dropdown>
+            <div class="form-error-title" *ngIf="formErrors.supervisionCompanyId">
+              {{formErrors.supervisionCompanyId}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            工程地址
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input style="position: relative" readonly (click)="addressClick($event)" pInputText type="text" formControlName="address" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.address}"/>
+            <div class="form-error-title" *ngIf="formErrors.address">
+              {{formErrors.address}}
+            </div>
+            <app-area [areas]="areas" *ngIf='showArea' (doSoming)="getAddress($event)"></app-area>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            工程坐标
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input pInputText style="position: relative" id="location" type="text" readonly formControlName="location" (click)="mapClick($event)" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.location}"/>
+            <div class="form-error-title" *ngIf="formErrors.location">
+              {{formErrors.location}}
+            </div>
+              <app-map *ngIf='showMap'  (doSoming)="getMap($event)" [address]="projectform.get('address').value" [coordinate]="projectform.get('location').value"></app-map>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            工程状态
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <p-dropdown [options]="lockStatus"  styleClass ="ph-form-select" formControlName="status"></p-dropdown>
+          </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <button pButton *ngIf="formAuth.save" class="pc-button-small" [disabled]="projectform.invalid" (click)="submit()" label="提交"></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

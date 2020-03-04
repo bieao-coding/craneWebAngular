@@ -1,0 +1,29 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="typeform" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            型号名称
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="craneModelName" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.craneModelName}"/>
+            <div class="form-error-title" *ngIf="formErrors.craneModelName">
+              {{formErrors.craneModelName}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            描述
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <textarea [rows]="3" [cols]="30" pInputTextarea autoResize="autoResize" formControlName="description"></textarea>
+          </div>
+        </div>
+        <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <button pButton type="submit" *ngIf="formAuth.save" [disabled]="typeform.invalid" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+  </div>
+</div>

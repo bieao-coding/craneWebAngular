@@ -1,0 +1,72 @@
+#loading-before{
+  position: absolute;
+  z-index: 2;
+  width: calc(100% - 14px);
+  height: calc(100% - 14px);
+  background-color: #181818;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1.no-line{
+    color: #f9b004;
+    text-shadow: #fff0 1px 0 1px;
+    animation: hideShow 1s infinite;
+  }
+  h2.choose-video{
+    color: #55f904;
+    text-shadow: #0e0e0e 1px 0 1px;
+    animation: bounceInLeft 1s;
+  }
+  h3.loading-error{
+    color: red;
+    text-shadow: #0e0e0e 1px 0 1px;
+    animation: bounceInDown 1s;
+  }
+}
+/*设备不在线动画*/
+@-webkit-keyframes hideShow {
+  0% {opacity: 0;}
+  50% {opacity: 1;}
+  100% {opacity: 0;}
+}
+@keyframes hideShow {
+  0% {opacity: 0;}
+  50% {opacity: 1;}
+  100% {opacity: 0;}
+}
+/*提示选择动画*/
+@-webkit-keyframes bounceInLeft{
+  0%{opacity:0;-webkit-transform:translateX(-2000px);-ms-transform:translateX(-2000px);transform:translateX(-2000px)}
+  60%{opacity:1;-webkit-transform:translateX(30px);-ms-transform:translateX(30px);transform:translateX(30px)}
+  80%{-webkit-transform:translateX(-10px);-ms-transform:translateX(-10px);transform:translateX(-10px)}
+  100%{-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0)}}
+@keyframes bounceInLeft{
+  0%{opacity:0;-webkit-transform:translateX(-2000px);-ms-transform:translateX(-2000px);transform:translateX(-2000px)}
+  60%{opacity:1;-webkit-transform:translateX(30px);-ms-transform:translateX(30px);transform:translateX(30px)}
+  80%{-webkit-transform:translateX(-10px);-ms-transform:translateX(-10px);transform:translateX(-10px)}
+  100%{-webkit-transform:translateX(0);-ms-transform:translateX(0);transform:translateX(0)}}
+@-webkit-keyframes bounceInDown{
+  0%{opacity:0;-webkit-transform:translateY(-2000px);transform:translateY(-2000px)}
+  60%{opacity:1;-webkit-transform:translateY(30px);transform:translateY(30px)}
+  80%{-webkit-transform:translateY(-10px);transform:translateY(-10px)}
+  100%{-webkit-transform:translateY(0);transform:translateY(0)}}
+@keyframes bounceInDown{
+  0%{opacity:0;-webkit-transform:translateY(-2000px);-ms-transform:translateY(-2000px);transform:translateY(-2000px)}
+  60%{opacity:1;-webkit-transform:translateY(30px);-ms-transform:translateY(30px);transform:translateY(30px)}
+  80%{-webkit-transform:translateY(-10px);-ms-transform:translateY(-10px);transform:translateY(-10px)}
+  100%{-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0)}}
+.click-color{
+  background-color: #b7b30e !important;
+}
+.click-color:hover{
+  background-color: #949103 !important;
+}
+.player{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: auto;
+  text-align: center;
+}

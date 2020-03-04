@@ -1,0 +1,11 @@
+.map-cloth{
+  position: absolute;
+  z-index:1004;
+  top: 35px;
+  left: 0;
+  width: 100%;
+  #map{
+    width: 99.9%;
+    height: 99.9%;
+  }
+}

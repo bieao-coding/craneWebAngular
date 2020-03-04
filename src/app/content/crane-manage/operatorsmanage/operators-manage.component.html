@@ -1,0 +1,32 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" label="保存" *ngIf="formAuth.save" (click)="submit()"  pButton icon="fa fa-save" class="pc-button-small"></button>
+    </div>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 ui-md-2 pc-input ph-input">
+          <input input-noSpace type="text" id="input" [(ngModel)] = 'searchName' pInputText placeholder="选择姓名或身份证查询">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" (click) = 'search()' pButton icon="fa-search" class="pc-button-small"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="operators" [(selection)]="selectedOperators" styleClass = 'minWidth800' [rowHover] = 'false'
+                       selectionMode="multiple">
+            <p-column [style]="{'width':'38px'}" selectionMode="multiple" ></p-column>
+            <p-column field="personalName" header="人员姓名">
+              <ng-template let-feature="rowData" pTemplate="body">
+                <span>{{feature.personalName}}</span>
+              </ng-template>
+            </p-column>
+            <p-column field="identityCard" header="身份证号"></p-column>
+          </p-dataTable >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

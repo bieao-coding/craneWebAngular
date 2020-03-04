@@ -1,0 +1,12 @@
+<div class="ui-fluid">
+  <div class='ui-g' id="main">
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" *ngIf="formAuth.save" label="保存" (click)="submit()" pButton icon="fa-save" class="pc-button-small"></button>
+    </div>
+    <div class="ui-g-12 ui-g card justify-center box-shadow-style" [ngStyle]="flowStyle" >
+      <div class="ui-md-5 ui-sm-12 tree">
+        <p-tree [value]="allAuth" selectionMode="checkbox" [(selection)]="selectedList" styleClass = "tree-content"></p-tree>
+      </div>
+    </div>
+  </div>
+</div>

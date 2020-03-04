@@ -1,0 +1,80 @@
+<div class="ui-fluid">
+  <div class="ui-g no-padding">
+    <div class='ui-g-12 ui-md-12 ui-sm-12'>
+      <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 top-content pc-flex ph-cancelHeight"  [ngStyle]="{'height.px': maxHeight * (2/3)}">
+        <div class="top-left-content back-linear ui-sm-12 pc-flex2 ph-height400" id="top-left">
+          <app-china *ngIf="showMap && selectModel === 'simple'" [citiesData]="citiesData" [mapWidth]="mapWidth" [resize] = 'resize' [data]="requestData" [mapData]="mapData" [mapName]="mapName" (doSoming)="loadClickMap($event)"></app-china>
+          <app-homeMap *ngIf="selectModel === 'complex'" [data]="oldMapData" [mapType]="mapName"></app-homeMap>
+            <div class="item-title border-style" *ngIf="selectModel === 'simple'">产品分布图</div>
+            <div class="map-item-right border-style">
+              <div (click)="clickModel('simple')" [ngClass]="{'select-item':selectModel === 'simple'}">简图</div>
+              <div (click)="clickModel('complex')" [ngClass]="{'select-item':selectModel === 'complex'}">详图</div>
+            </div>
+        </div>
+        <div class="top-center-content ui-sm-12 pc-flex1" id="top-center">
+          <div class="top-center-content-top back-linear ph-height300">
+            <div class="top-item">
+              <div class="title border-style">塔机安全监控</div>
+            </div>
+            <div class="center-item">
+              <div class="item-content">
+                <div class="item-name">塔机总数</div>
+                <div class="item-number">{{deviceInfo.craneCount || 0}}</div>
+              </div>
+              <div class="item-content">
+                <div class="item-name">新增塔机</div>
+                <div class="item-number">{{deviceInfo.addCraneCount || 0}}</div>
+              </div>
+              <div class="item-content">
+                <div class="item-name">防碰撞在线</div>
+                <div class="item-number">{{deviceInfo.antiOnlineCount || 0}}</div>
+              </div>
+            </div>
+            <div class="center-item">
+              <div class="item-content">
+                <div class="item-name">视频在线</div>
+                <div class="item-number">{{deviceInfo.videoOnlineCount || 0}}</div>
+              </div>
+              <div class="item-content">
+                <div class="item-name">报警</div>
+                <div class="item-number" style="color:rgb(210, 64, 60)">{{deviceInfo.alarmCount || 0}}</div>
+              </div>
+              <div class="item-content">
+                <div class="item-name">违章</div>
+                <div class="item-number" style="color:rgb(210, 64, 60)">{{deviceInfo.peccancyCount || 0}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="top-center-content-bottom back-linear ph-height300">
+            <div class="item-title border-style">设备监控</div>
+            <app-rate [rateWidth]="centerWidth" *ngIf = 'showRate' [resize] = 'resize' [data]="rateData"></app-rate>
+          </div>
+        </div>
+        <div class="top-right-content ui-sm-12 pc-flex1" id="top-right">
+          <div class="top-right-top back-linear ph-height300">
+            <app-pie [pieHeight]="pieHeight" [theme] = 'currentTheme' [pieWidth]="pieWidth" *ngIf = 'showPie' [data]="onlineData" [id]="'anti'" [resize] = 'resize'></app-pie>
+            <div class="item-title border-style">防碰撞在线率</div>
+          </div>
+          <div class="top-right-top back-linear ui-sm-12 ph-height300">
+            <app-pie [pieHeight]="pieHeight" [theme] = 'currentTheme' [pieWidth]="pieWidth" *ngIf = 'showPie' [data]="offlineData" [id]="'video'" [resize] = 'resize'></app-pie>
+            <div class="item-title border-style">视频在线率</div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g ui-g-12 ui-md-12 ui-sm-12 bottom-content pc-flex ph-cancelHeight" [ngStyle]="{'height.px': maxHeight * (1/3)}">
+        <div class="left-content back-linear ui-sm-12 pc-flex2 ph-height300" style="position: relative" id="bottom-left">
+          <app-line *ngIf="showLine" [theme] = 'currentTheme' [lineWidth]="lineWidth" [data]="monthInfo" [resize] = 'resize'></app-line>
+          <div class="item-title border-style">最近月上线量</div>
+        </div>
+        <div class="right-content back-linear ui-sm-12 pc-flex1 ph-height300 ph-margin-top" id="bottom-right">
+          <app-bar *ngIf="showBar" [theme] = 'currentTheme' [barWidth]="barWidth" [state]="barState" [option]="barOption" [resize] = 'resize'></app-bar>
+          <div class="title-collection">
+            <div class="title-collection-item border-style" (click)="clickItem('actual')" [ngClass]="{'select-item':current === 'actual'}">实时违章</div>
+            <div class="title-collection-item border-style" (click)="clickItem('history')" [ngClass]="{'select-item':current === 'history'}">违章TOP</div>
+            <div class="title-collection-item border-style" (click)="clickItem('deviceTop')" [ngClass]="{'select-item':current === 'deviceTop'}">设备量TOP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

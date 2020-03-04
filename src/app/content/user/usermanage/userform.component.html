@@ -1,0 +1,101 @@
+<div class="ui-fluid">
+  <div class='ui-g card box-shadow-style'>
+    <form [formGroup]="userform" id="form" class="ui-g-12 ui-md-12 ui-sm-12 no-padding" novalidate>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          登录名
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text"  formControlName="username" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.username}"/>
+          <div class="form-error-title" *ngIf="formErrors.username">
+            {{formErrors.username}}
+          </div>
+        </div>
+      </div>
+      <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          所属单位
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <p-dropdown [options]="companies" formControlName="companyId"  [autoWidth]="false" filter="true"></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          用户姓名
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text" formControlName="realName" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.realName}"/>
+          <div class="form-error-title" *ngIf="formErrors.realName">
+            {{formErrors.realName}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          身份证号
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text" formControlName="idCard" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.idCard}"/>
+          <div class="form-error-title" *ngIf="formErrors.idCard">
+            {{formErrors.idCard}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          电子邮箱
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text" formControlName="email" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.email}"/>
+          <div class="form-error-title" *ngIf="formErrors.email">
+            {{formErrors.email}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          联系电话
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text" formControlName="telephone" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.telephone}"/>
+          <div class="form-error-title" *ngIf="formErrors.telephone">
+            {{formErrors.telephone}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          用户角色
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <p-dropdown [options]="roles" styleClass ="ph-form-select" [autoWidth]="false"  formControlName="roleId"></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          性别
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <p-dropdown [options]="userSex" styleClass ="ph-form-select" formControlName="sex"></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          状态
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <p-dropdown [options]="lockStatus"  styleClass ="ph-form-select" formControlName="status" ></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <button pButton type="submit" *ngIf="formAuth.save" [disabled]="userform.invalid" class="pc-button-small" label="提交"></button>
+      </div>
+    </form>
+  </div>
+</div>

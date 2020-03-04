@@ -1,0 +1,38 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" *ngIf="controlAuth.add" label="添加" pButton icon="fa-plus" class="pc-button-small" (click) = 'addCompany()'></button>
+    </div>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-input ph-input">
+          <input input-noSpace type="text" [(ngModel)] = 'companyName' id="input" pInputText placeholder="单位名称">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="companies" dataKey="companyId" [(selection)]="selectedCompany"   styleClass = 'minWidth1000' [rowHover] = 'true'>
+            <p-column field="companyName" header="单位名称"></p-column>
+            <p-column field="legalPerson" header="法人代表"></p-column>
+            <p-column field="webSite" header="单位网站地址"></p-column>
+            <p-column field="telephone" header="单位电话"></p-column>
+            <p-column field="fax" header="单位传真"></p-column>
+            <p-column header="操作" headerStyleClass="width60" bodyStyleClass="operation">
+              <ng-template let-company="rowData" let-i="rowIndex" pTemplate="body">
+                <a *ngIf="controlAuth.edit" href="javascript:void(0)" (click)="operations('companyedit',company.companyId)">编辑</a>
+              </ng-template>
+            </p-column>
+          </p-dataTable >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

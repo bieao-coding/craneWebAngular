@@ -1,0 +1,74 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-input ph-input">
+          <input input-noSpace type="text" [(ngModel)] = 'searchValue' id="input" pInputText placeholder="工程名称">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-table [value]="projects" dataKey="projectId" [(selection)]="selectedProject"  styleClass = 'text-center minWidth800' (onRowExpand) = 'exportRow($event)' [rowHover] = 'true' >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th class="text-left">工程名称</th>
+                <th class="scale20">工地电话</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-i='rowIndex'>
+              <tr style="cursor: pointer" [pRowToggler]="rowData" (click)="rowClick(rowData.projectId)" [ngClass]="{'click-row':rowData.projectId == index,'ui-state-highlight':rowData.projectId === index}">
+                <td style="text-align: left">{{rowData.projectName}}</td>
+                <td>{{rowData.telephone}}</td>
+              </tr>
+            </ng-template>
+            <ng-template let-project pTemplate="rowexpansion">
+              <tr class="expand-tr">
+                <td colspan="2">
+                  <p-table [value]="cranesList['cranes' + project.projectId]" [customSort]="true" styleClass="expand-tr-table pc-expand-table ph-expand-table" [rowHover] = 'false'>
+                    <ng-template pTemplate="body" let-rowData let-i='rowIndex'>
+                      <tr>
+                        <td class="text-left width200">
+                          <div>
+                            <span>{{rowData.craneNumber}}</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="snDiv">
+                            <i title="防碰撞设备" class="fa fa-desktop" [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                            <span *ngIf="!!rowData.sn" class="snSpan">{{rowData.sn}}</span>
+                            <span *ngIf="!rowData.sn" class="snSpan color-gray">—</span>
+                          </div>
+                        </td>
+                        <td>
+                          <i class="fa fa-signal font-size16"  [ngClass]="{'online':rowData.online,'offline':!rowData.online}"></i>
+                        </td>
+                        <td class="text-left">
+                          <span>
+                            <a href="javascript:void(0)" (click)="operations(project.projectId,rowData.craneId)" [ngClass]="{'disable-a':!rowData.sn}" >设置参数</a>
+                          </span>
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="2" class="color-no-data">暂无数据</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </td>
+            </tr>
+          </ng-template>
+          </p-table >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [currentPage]="pageNumber" [rowsPerPageOptions]="options" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

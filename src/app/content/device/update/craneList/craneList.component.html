@@ -1,0 +1,60 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-g-12 ui-sm-12 pc-flex flex-center justify-between">
+          <div>
+            <button type="button" label="当前主机箱版本" pButton icon="fa-search" class="pc-button ph-button pc-button-x-large" (click)="switchCmd('SystemInfo','R',0)"></button>
+            <button type="button" label="选择版本"  (click)="chooseVersion()" pButton icon="fa-search" class="pc-button ph-button pc-button-large"></button>
+          </div>
+          <div>
+            <button type="button" label="全部启动"  pButton icon="fa-toggle-right" (click)="switchCmd('NewSoftwareInfo','W',0)" class="pc-button ph-button pc-button-large"></button>
+            <button type="button" label="全部取消"  pButton icon="fa-power-off" (click)="switchCmd('CancelUpgrade','W',0)" class="pc-button ph-button pc-button-large"></button>
+            <button type="button" label="全部重启"  pButton icon="fa-refresh" (click)="switchCmd('ConfirmUpgrade','W',0)" class="pc-button pc-button-large"></button>
+          </div>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="cranes" [(selection)]="selectedOperators" styleClass = 'text-center minWidth1500' selectionMode="multiple" [rowHover] = 'false'>
+            <p-column [style]="{'width':'38px'}" selectionMode="multiple" ></p-column>
+            <p-column field="craneNumber" header="塔机编号"></p-column>
+            <p-column field="sn" header="SN"></p-column>
+            <p-column field="online" header="在线状态">
+              <ng-template let-crane="rowData" pTemplate="body">
+                <span *ngIf = 'crane.online' class="color-green">在线</span>
+                <span *ngIf = '!crane.online' class="color-red">离线</span>
+              </ng-template>
+            </p-column>
+            <p-column field="currentVersion" header="当前主机版本"></p-column>
+            <p-column field="upgradeVersion" header="升级软件版本"></p-column>
+            <p-column field="upgradeVersionExp" header="扩展版本"></p-column>
+            <p-column field="upgradeCrc" header="CRC校验"></p-column>
+            <p-column field="upgradeSize" header="软件大小"></p-column>
+            <p-column field="packageSize" header="分包大小"></p-column>
+            <p-column field="packageCount" header="分包数量"></p-column>
+            <p-column field="achPackageCount" header="已获数据包数"></p-column>
+            <p-column field="checkResult" header="校验结果">
+              <ng-template let-crane="rowData" pTemplate="body">
+                <span *ngIf = 'crane.checkResult' class="color-green">成功</span>
+                <span *ngIf = '!crane.checkResult' class="color-red">失败</span>
+              </ng-template>
+            </p-column>
+            <p-column header="操作" headerStyleClass="width150" bodyStyleClass="operation">
+              <ng-template let-info="rowData" let-i="rowIndex" pTemplate="body">
+                <a  href="javascript:void(0)" (click)="singleCmd('NewSoftwareInfo','W',info)">启动</a>
+                <a  href="javascript:void(0)" (click)="singleCmd('CancelUpgrade','W',info)">取消</a>
+                <a  href="javascript:void(0)" (click)="singleCmd('ConfirmUpgrade','W',info)">重启设备</a>
+              </ng-template>
+            </p-column>
+          </p-dataTable >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [currentPage]="pageNumber" [rowsPerPageOptions]="options" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

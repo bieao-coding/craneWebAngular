@@ -1,0 +1,79 @@
+.defind-dialog{
+  position: fixed;
+  text-align: center;
+  color:white;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  z-index: 1002;
+    .dialog-cloth{
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      opacity: 0.3;
+    }
+    .dialog-content{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      border-radius: 4px;
+      background-color: #F5F5F5;
+      color: #424242;
+      box-shadow: 0 2px 11px 0 #797979;
+    }
+    .dialog-title{
+      border-radius: 4px 4px 0 0;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+    }
+    .dialog-message{
+      text-align: left;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      i{
+        font-size: 25px;
+        color: #e6a23c;
+      }
+      .dialog-message-content{
+        margin-left: 10px;
+       }
+    }
+    .dialog-button{
+      border-radius: 0 0 4px 4px;
+      padding: 0 .5em .5em .5em;
+      text-align: right;
+      font-size: 12px;
+      button{
+        border-radius: 3px;
+        width: 56px;
+      }
+    }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(-50%, -100%, 0);
+    transform: translate3d(-50%, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+  }
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+.animated {
+  -webkit-animation-duration: .4s;
+  animation-duration: .4s;
+}

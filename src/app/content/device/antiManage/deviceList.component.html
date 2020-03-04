@@ -1,0 +1,36 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" label="添加" *ngIf="controlAuth.add" pButton icon="fa-plus" class="pc-button-small" (click) = 'addDevice()'></button>
+    </div>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-md-2 ui-sm-12 pc-input ph-input">
+          <input input-noSpace type="text" [(ngModel)] = 'searchValue' id="input" pInputText placeholder="请输入sn">
+        </div>
+        <div class="ui-g ui-md-2 ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" (click)="search()"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="devices"  styleClass = 'minWidth500' [rowHover] = 'true'>
+            <p-column field="sn" header="sn"></p-column>
+            <p-column field="online" header="状态">
+              <ng-template let-crane="rowData" pTemplate="body">
+                <i class="fa fa-signal font-size16" [ngClass]="{'online':crane.online,'offline':!crane.online}"></i>
+              </ng-template>
+
+            </p-column>
+            <p-column field="lastLoginTime" header="最近上线时间"></p-column>
+          </p-dataTable >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [currentPage]="pageNumber" [rowsPerPageOptions]="options" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

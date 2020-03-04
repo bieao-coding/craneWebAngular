@@ -1,0 +1,41 @@
+<div class="ui-fluid">
+    <div class='ui-g card box-shadow-style'>
+      <form [formGroup]="factoryform" id="form" class="ui-md-12 ui-sm-12 no-padding">
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            厂商名称
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="craneFactoryName" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.craneFactoryName}"/>
+            <div class="form-error-title" *ngIf="formErrors.craneFactoryName">
+              {{formErrors.craneFactoryName}}
+            </div>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            地区
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <input input-noSpace pInputText type="text"  formControlName="nation" placeholder="必填"
+                   [ngClass]="{'form-input-error': formErrors.nation}"/>
+            <div class="form-error-title" *ngIf="formErrors.nation">
+              {{formErrors.nation}}
+            </div>
+          </div>
+        </div>
+        <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+          <div class="ui-sm-12 pc-form-label form-label">
+            描述
+          </div>
+          <div class="ui-md-4 ui-sm-12 form-input">
+            <textarea [rows]="3" [cols]="30" pInputTextarea autoResize="autoResize" formControlName="description" ></textarea>
+          </div>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+          <button pButton *ngIf="formAuth.save" type="submit" [disabled]="factoryform.invalid" class="pc-button-small" label="提交"></button>
+        </div>
+      </form>
+  </div>
+</div>

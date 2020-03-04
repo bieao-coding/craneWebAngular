@@ -1,0 +1,65 @@
+<div class="ui-fluid">
+  <div class='ui-g card box-shadow-style'>
+    <form [formGroup]="menuForm" id="form" class="ui-g-12 ui-md-12 ui-sm-12 no-padding" novalidate>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          菜单名称
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text"  formControlName="name" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.name}"/>
+          <div class="form-error-title" *ngIf="formErrors.name">
+            {{formErrors.name}}
+          </div>
+        </div>
+      </div>
+      <div class="uui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          类型
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <p-dropdown [options]="types" formControlName="type" (onChange)="changeType($event)"  [autoWidth]="false"></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          同级顺序
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text" formControlName="sort" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.sort}"/>
+          <div class="form-error-title" *ngIf="formErrors.sort">
+            {{formErrors.sort}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <div class="ui-sm-12 pc-form-label form-label">
+          菜单图标
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text" formControlName="icon" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.icon}"/>
+          <div class="form-error-title" *ngIf="formErrors.icon">
+            {{formErrors.icon}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item" *ngIf="showRoot">
+        <div class="ui-sm-12 pc-form-label form-label">
+          路由地址
+        </div>
+        <div class="ui-md-4 ui-sm-12 form-input">
+          <input input-noSpace pInputText type="text"  formControlName="root" placeholder="必填"
+                 [ngClass]="{'form-input-error': formErrors.root}"/>
+          <div class="form-error-title" *ngIf="formErrors.root">
+            {{formErrors.root}}
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12 ui-sm-12 form-item">
+        <button pButton type="submit" *ngIf="formAuth.save"  [disabled]="menuForm.invalid && !validRoot" class="pc-button-small" label="提交"></button>
+      </div>
+    </form>
+  </div>
+</div>

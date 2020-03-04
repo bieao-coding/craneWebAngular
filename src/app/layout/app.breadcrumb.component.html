@@ -1,0 +1,18 @@
+<div class="layout-breadcrumb flex-center ">
+    <ul class="ui-md-11 ui-sm-10">
+        <li>
+            <a href="javascript:void(0)">
+                <i class="fa fa-home"></i>
+            </a>
+        </li>
+        <li>/</li>
+        <ng-template ngFor let-item let-last="last" [ngForOf]="items">
+            <li>
+                <a (click)="goBack()" *ngIf="item.routerLink" style="cursor: pointer;color:#0d8ced">{{item.label}}</a>
+                <ng-container *ngIf="!item.routerLink">{{item.label}}</ng-container>
+            </li>
+            <li *ngIf="!last">/</li>
+        </ng-template>
+    </ul>
+  <div class="ui-md-1 ui-sm-2 go-back"><i class="fa fa-chevron-left cursor-point" title="返回" (click) = goBack() *ngIf="showBack"></i></div>
+</div>

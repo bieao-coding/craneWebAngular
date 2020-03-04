@@ -1,0 +1,596 @@
+/* You can add global styles to this file, and also import other style files */
+/*自定义*/
+.flex-center{align-items: center;}
+.border-none{border:none !important;}
+.justify-center{justify-content: center};
+.justify-between{justify-content:space-between};
+.text-center{text-align: center;}
+.m-t-10{margin-top: 10px;}
+.m-r-10{margin-right: 10px;}
+.m-r-20{margin-right: 20px;}
+.m-r-40{margin-right: 40px;}
+.m-l-40{margin-left: 40px;}
+.m-l-20{margin-left: 20px;}
+.cursor-point{cursor: pointer};
+.text-left{text-align: left};
+.font-size16{font-size: 16px !important};
+.font-size20{font-size: 20px !important};
+.image25{width: 25px;height:25px};
+.image64{width: 64px;height:64px};
+/*全屏居中*/
+.all-center{
+  position: absolute;
+  left:50%;
+  top: 50%;
+  transform: translate(-50%,-50%)
+}
+/*当前title样式*/
+.current-title{
+  text-align: left;
+  display:flex;
+  justify-content: space-between;
+  .main-info{
+    display: flex;
+    flex-wrap: nowrap;
+    font-weight: bold;
+    span:first-child:before{
+      content: '\f0a4';
+      margin-right: 10px;
+      color: #39a3f4;
+      font-family: FontAwesome;
+    }
+  }
+}
+.message-cloth{
+  width: 100%;
+  padding: 0.429em 0.857em;
+  .last-message{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    > span:first-child:before{
+      content: '\f017';
+      margin-right: 10px;
+      color: #39a3f4;
+      font-family: FontAwesome;
+    }
+    span:not(:first-child){
+      color:#b7b30e
+    }
+  }
+}
+/*取消所有自适应的padding*/
+.no-padding {
+  .ui-g-1,
+  .ui-g-2,
+  .ui-g-3,
+  .ui-g-4,
+  .ui-g-5,
+  .ui-g-6,
+  .ui-g-7,
+  .ui-g-8,
+  .ui-g-9,
+  .ui-g-10,
+  .ui-g-11,
+  .ui-g-12,
+  .ui-md-1,
+  .ui-md-2,
+  .ui-md-3,
+  .ui-md-4,
+  .ui-md-5,
+  .ui-md-6,
+  .ui-md-7,
+  .ui-md-8,
+  .ui-md-9,
+  .ui-md-10,
+  .ui-md-11,
+  .ui-md-12,
+  .ui-sm-1,
+  .ui-sm-2,
+  .ui-sm-3,
+  .ui-sm-4,
+  .ui-sm-5,
+  .ui-sm-6,
+  .ui-sm-7,
+  .ui-sm-8,
+  .ui-sm-9,
+  .ui-sm-10,
+  .ui-sm-11,
+  .ui-sm-12{
+    padding:0;
+  }
+}
+/*表单验证样式*/
+form{
+  height: 100%;
+  .form-item{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .form-label{
+    padding:5px 0 !important;
+    margin-right: 10px;
+  }
+  .form-input {
+    position: relative;
+    font-size: 14px;
+  }
+  .form-error-title {
+    color: #f56c6c;
+    font-size: 12px;
+    line-height: 1;
+    padding-top: 4px;
+    position: absolute;
+  }
+  .form-input-error{
+    border-color: #f56c6c !important;
+    box-shadow: 0 0 7px 0 #f56c6c !important;
+    -webkit-box-shadow: 0 0 7px 0 #f56c6c !important;
+  }
+  .form-input-error:hover,.form-input-error:focus{
+    box-shadow: 0 0 7px 0 #f56c6c !important;
+    -webkit-box-shadow: 0 0 7px 0 #f56c6c !important;
+  }
+}
+/*查询样式*/
+.search{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding:0.5em 1em;
+  box-shadow: none;
+}
+/*按钮集样式*/
+.buttons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding:0 0 0.5em 0;
+}
+/*内容区域路径按钮样式*/
+.layout-breadcrumb.flex-center{
+  display:flex;
+  align-items: center;
+  .go-back{
+    margin: 10px 0 0 0;
+    text-align: right;
+    font-size: 20px;
+    padding: 0;
+  }
+}
+/*树组件页面的样式*/
+.tree{
+  overflow: auto;
+  .tree-content{
+    border:none !important;
+  }
+}
+/*chrome滚动条的样式*/
+::-webkit-scrollbar{
+  width: 3px;
+  height: 5px;
+}
+::-webkit-scrollbar-button{
+  height: 19px;
+  width:0;
+}
+::-webkit-scrollbar-track-piece{
+
+}
+::-webkit-scrollbar-thumb{
+  border-radius: 3px;
+}
+/*颜色值*/
+.color-red{
+  color:red !important;
+}
+.color-green{
+  color:green !important;
+}
+.color-yellow{
+  color:yellow !important;
+}
+.color-no-data{
+   color: #888686 !important;
+}
+/*禁止点击的效果*/
+.disable-a{
+  pointer-events: none;
+}
+/*日历中的月份和年份的样式问题*/
+.calendar-month-year{
+  select{
+    outline: medium;
+    height: 23px;
+  }
+  select:first-child{
+    width: 40%;
+  }
+}
+/*多余文本省略显示*/
+.hidden-more{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/*表头加图标*/
+table {
+  th.warning {
+    span:before {
+      content: '\f0c8';
+      margin-right: 5px;
+      color: #AFAC23;
+      font-family: FontAwesome;
+    }
+  }
+  th.alarm {
+    span:before {
+      content: '\f0c8';
+      margin-right: 5px;
+      color: #FC9316;
+      font-family: FontAwesome;
+    }
+  }
+  th.peccancy {
+    span:before {
+      content: '\f0c8';
+      margin-right: 5px;
+      color: #E13535;
+      font-family: FontAwesome;
+    }
+  }
+}
+/*去掉百度地图左下角的版权信息*/
+.anchorBL{display:none}
+/*ali视频的处理*/
+
+@media screen and (min-width: 40.063em) {
+  .pc-label,.pc-input,.pc-button{
+    margin-right: 10px;
+  }
+  /*pc端form表单的宽度*/
+  form .pc-form-label{
+    text-align: right;
+    width:150px;
+  }
+  /*pc端按钮大小*/
+  .pc-button-small{
+    width:70px !important;
+  }
+  .pc-button-middle{
+    width:90px !important;
+  }
+  .pc-button-large{
+    width:100px !important;
+  }
+  .pc-button-x-large{
+    width:140px !important;
+  }
+  /*扩展table的pc端宽度*/
+  .pc-expand-table{
+    width: 90% !important;
+  }
+  .pc-width100{
+    width: 100px;
+  }
+  .pc-width250{
+    width: 250px;
+  }
+  .pc-flex{
+    display:flex;
+  }
+}
+@media screen and (max-width: 40em) {
+  .ph-label,.ph-input,.ph-button{
+    margin-bottom: 10px;
+  }
+  form .ph-form-select{
+    width:100% !important;
+  }
+  .ph-left-side{
+    width: 100% !important;
+    height: 70% !important;
+  }
+  .ph-breadcrumb{
+    height: inherit !important;
+    padding: 0 !important;
+    position: fixed;
+    z-index: 3;
+  }
+  .ph-layout-content-container{
+    padding:112px 20px 20px 20px !important;
+  }
+  .ph-expand-table{
+    width: 100% !important;
+  }
+  .ph-font-size-13{
+    font-size: 13px;
+  }
+}
+/*表格展示内容的最小宽度*/
+.table-autoFlow-x{
+  padding: 5px 0;
+  overflow: auto;
+}
+.minWidth1000{
+  text-align: center;
+  min-width: 1000px;
+}
+.minWidth1300{
+  text-align: center;
+  min-width: 1300px;
+}
+.minWidth2900{
+  text-align: center;
+  min-width: 2900px;
+}
+.minWidth1500{
+  text-align: center;
+  min-width: 1500px;
+}
+.minWidth1400{
+  text-align: center;
+  min-width: 1400px;
+}
+.minWidth800{
+  text-align: center;
+  min-width: 800px;
+}
+.minWidth500{
+  text-align: center;
+  min-width: 500px;
+}
+/*特殊td的固定宽度*/
+.width200{
+  width: 200px;
+}
+.width180{
+  width: 180px;
+}
+.width150{
+  width: 150px;
+}
+.width120{
+  width: 120px;
+}
+.width100{
+  width: 100px;
+}
+.width60{
+  width: 60px;
+}
+.scale20{
+  width:20%
+}
+.scale30{
+  width:30%
+}
+/*扩展表格的样式*/
+.ui-expanded-row-content{
+  font-size: 12px;
+  > td{
+    padding: 0 !important;
+    border-width: 0;
+  }
+}
+/*扩展表中合并样式*/
+.expand-table{
+  thead{
+    display: none;
+  }
+  tbody{
+    border-width: 0;
+  }
+  td{
+    border-width: 0 !important;
+  }
+  .item-craneName{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    a{
+      position: relative;
+    }
+    .crane-operator-num{
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      left: 19px;
+      top: 13px;
+      background-color: #f00;
+      font-size: 12px;
+      color: #fff;
+      text-align: center;
+      line-height: 14px;
+    }
+  }
+}
+/*扩展表格的样式*/
+.expand-tr{
+  font-size: 12px;
+  > td{
+    padding: 0 !important;
+    border: none !important;
+  }
+}
+/*设备中扩展表不存在合并的样式*/
+.expand-tr-table{
+  table{
+    td{
+      border: none !important;
+    }
+  }
+}
+
+.snSpan{
+  width:75px;
+  display: block;
+}
+/*扩展表中的设备+sn的样式*/
+.snDiv{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  i{
+    margin-right: 20px;
+  }
+}
+/*表格中TD的样式*/
+table{
+  td.operation{
+    padding: 0 5px !important;
+    span{
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}
+/*点击颜色*/
+.click-color{
+  background-color: #39a3f4;
+  color: #fff !important;
+}
+/*全屏样式*/
+.full-screen{
+  overflow: hidden !important;
+  .topbar{
+    display: none !important;
+  }
+  .layout-breadcrumb{
+    display: none !important;
+  }
+  .layout-content{
+    padding: 0 !important;
+    .layout-content-container{
+      padding: 0 !important;
+    }
+  }
+}
+/*公司名字样式*/
+.companyName{
+  font-size: 23px;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+}
+/*input的自动填充*/
+//input:-webkit-autofill {
+//  -webkit-text-fill-color: transparent !important;
+//  transition: background-color 5000s ease-in-out 0s;
+//}
+/*ul公共样式*/
+.baidu-info{
+  overflow: auto;
+  ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    li{
+      padding:0 9px;
+      font-weight: bold;
+      list-style: none;
+      border-left: none;
+      color: #fff;
+      background: #797979;
+      cursor: pointer;
+    }
+    li:last-child{
+      border-right: none;
+    }
+  }
+  table{
+    border-collapse:collapse;
+    tr{
+      border: 1px solid #dddede;
+      td{
+        border-right: 1px solid #dddede;
+        padding: 2px 8px;
+        white-space: nowrap;
+        color: #616263;;
+      }
+      td:first-child,td:nth-child(3){
+        font-weight: bold;
+        color: #000;
+      }
+    }
+  }
+  #deviceInfo td:nth-child(2),#deviceInfo td:nth-child(4){
+    padding: 2px 15px;
+  }
+  table:last-child{
+    display: none;
+  }
+  .click-bg{
+    background: #39a3f4;
+  }
+}
+/*table表格在手机中的显示宽度*/
+
+/*sn状态类*/
+.snState{
+  display: block;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+}
+/*分页组件样式*/
+.paginator{
+  width: 100%;
+  position: relative;
+  border-left: none;
+  border-right: none;
+  .total-value{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1em;
+  }
+}
+/*参数设置中的状态样式*/
+.params-style{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color:#b7b30e;
+  font-weight: bold;
+  div:not(:first-child){
+    margin-left: 20px;
+  }
+}
+/*文件上传按钮的样式*/
+.el-upload {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  .el-button{
+    padding: 9px 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #409eff;
+    display: inline-block;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #409eff;
+    -webkit-appearance: none;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    margin: 0;
+    transition: .1s;
+    font-weight: 500;
+  }
+  .el-upload_input{
+    display: none;
+  }
+}

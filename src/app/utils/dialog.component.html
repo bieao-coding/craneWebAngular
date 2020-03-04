@@ -1,0 +1,13 @@
+<div class="defind-dialog" *ngIf="showDialog">
+  <div class="dialog-cloth"></div>
+  <div class="ui-g-12 ui-md-3 ui-sm-10 dialog-content animated fadeInDown" style="padding:0">
+    <div class="ui-md-12 ui-sm-12 dialog-title"><div>提示</div><i class="fa fa-fw fa-close" style="cursor: pointer" (click) = 'closeDialog()'></i></div>
+    <div class="ui-md-12 ui-sm-12 dialog-message">
+      <i class="fa fa-exclamation-circle"></i>
+      <div class="dialog-message-content">确认要删除该条信息吗？</div>
+    </div>
+    <div class="ui-md-12 ui-sm-12 dialog-button">
+      <button type="button" pButton label="确认" class="margin-left10" (click) = 'doSure()'></button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="ui-g-12 ui-sm-12 buttons" >
+      <button type="button" label="保存" *ngIf="formAuth.save" (click)="submit()"  pButton icon="fa fa-save" class="pc-button-small"></button>
+    </div>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 ui-md-2 pc-input ph-input">
+          <input input-noSpace type="text" id="input" [(ngModel)] = 'searchName' pInputText placeholder="选择工程名或电话号码查询">
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" (click) = 'search()' pButton icon="fa-search" class="pc-button-small"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-dataTable [value]="projectData" dataKey="projectId" [(selection)]="selectedProject" styleClass = 'minWidth800' [rowHover] = 'false'
+                       selectionMode="multiple">
+            <p-column [style]="{'width':'38px'}" selectionMode="multiple" ></p-column>
+            <p-column field="projectName" header="工程名称"></p-column>
+            <p-column field="workCompanyName" header="施工单位" headerStyleClass="scale20"></p-column>
+            <p-column field="telephone" header="工地电话" headerStyleClass="width100"></p-column>
+            <p-column field="status" header="状态" headerStyleClass="width60">
+              <ng-template let-project="rowData" pTemplate="body">
+                <span *ngIf = '!project.status' class="color-green">启用</span>
+                <span *ngIf = 'project.status' class="color-red">禁用</span>
+              </ng-template>
+            </p-column>
+          </p-dataTable >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+

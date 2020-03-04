@@ -1,0 +1,87 @@
+<div class="ui-fluid">
+  <div class="ui-g" id='main'>
+    <div class="body-content">
+      <div class="search no-padding">
+        <div class="ui-sm-12 pc-label ph-label">
+          开始时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="beginTime" [showTime]="true" [readonlyInput]="true" hourFormat="24" dateFormat="yy-mm-dd" (onSelect)="selectBegin($event)" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" [showSeconds]="true" yearRange="1970:2030" styleClass = 'calendar-month-year'></p-calendar>
+        </div>
+        <div class="ui-sm-12 pc-label ph-label">
+          结束时间
+        </div>
+        <div class="ui-sm-12 pc-input ph-input">
+          <p-calendar [(ngModel)]="endTime" (onSelect)="selectEnd($event)" [readonlyInput]="true" hourFormat="24" dateFormat="yy-mm-dd" [showTime]="true" [locale]="locale" [monthNavigator]="true" [yearNavigator]="true" [showSeconds]="true" yearRange="1970:2030" styleClass="calendar-month-year"></p-calendar>
+        </div>
+        <div class="ui-sm-12">
+          <button type="button" label="查找" pButton icon="fa-search" class="pc-button-small" id="search"></button>
+        </div>
+      </div>
+      <div class="card" [ngStyle]="flowStyle">
+        <div class="table-autoFlow-x">
+          <p-table [value]="workData" [customSort]="true"  styleClass = 'minWidth1400' [rowHover] = 'false'>
+            <ng-template pTemplate="caption">
+              <div class="current-title">
+                <div class="main-info">
+                  <span>
+                  {{crane.craneNumber}}（{{crane.sn}}）
+                  </span>
+                  <i class="fa fa-signal font-size16" [ngClass]="{'online':crane.online === 'true','offline':crane.online === 'false'}"></i>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width:141px">吊重时间</th>
+                <th>回转角度</th>
+                <th>幅度(m)</th>
+                <th>吊钩高度(m)</th>
+                <th>吊重(t)</th>
+                <th>力矩百分比</th>
+                <th>安全吊重(t)</th>
+                <th>风速(m/s)</th>
+                <th>吊绳倍率(t)</th>
+                <th class="warning"><span>提醒</span></th>
+                <th class="alarm"><span>报警</span></th>
+                <th class="peccancy"><span>违章</span></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-i='rowIndex'>
+              <tr>
+                <td>{{rowData.recordTime}}</td>
+                <td>{{rowData.rotationAngle.toFixed(2)}}</td>
+                <td>{{rowData.radius.toFixed(2)}}</td>
+                <td>{{rowData.height.toFixed(2)}}</td>
+                <td>{{rowData.loadValue.toFixed(2)}}</td>
+                <td>{{rowData.torquePercent.toFixed(2)}}</td>
+                <td>{{rowData.safeLoad.toFixed(2)}}</td>
+                <td>{{rowData.windSpeed.toFixed(2)}}</td>
+                <td>{{rowData.stringFactor}}</td>
+                <td class="hidden-more" style="cursor: pointer" [title]="rowData.warning"  (click) = 'tdClick($event)'>
+                  {{rowData.warning}}
+                </td>
+                <td class="hidden-more" style="cursor: pointer" [title]="rowData.alarm"  (click) = 'tdClick($event)'>
+                  {{rowData.alarm}}
+                </td>
+                <td class="hidden-more" style="cursor: pointer" [title]="rowData.peccancy"  (click) = 'tdClick($event)'>
+                  {{rowData.peccancy}}
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="12" class="color-no-data">暂无数据</td>
+              </tr>
+            </ng-template>
+          </p-table >
+        </div>
+      </div>
+      <div class="paginator">
+        <p-paginator [rows]="pageSize" [totalRecords]="total" [rowsPerPageOptions]="options" [currentPage]="pageNumber" styleClass="paginator-border" (onPageChange)="pageChange($event)"></p-paginator>
+        <div *ngIf="!isPh" class="total-value">共 {{total}} 条</div>
+      </div>
+    </div>
+  </div>
+</div>
+
