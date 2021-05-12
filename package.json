@@ -30,7 +30,7 @@
     "@ngx-translate/http-loader": "^3.0.1",
     "angular-baidu-maps": "^2.0.1",
     "angular2-baidu-map": "^4.3.0",
-    "chart.js": "2.7.1",
+    "chart.js": "2.9.4",
     "core-js": "2.5.1",
     "echarts": "^4.1.0",
     "font-awesome": "4.7.0",
